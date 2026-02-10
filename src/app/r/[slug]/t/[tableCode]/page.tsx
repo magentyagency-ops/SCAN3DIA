@@ -118,7 +118,7 @@ export default function MenuPage() {
             quantity,
             notes,
             selectedOptions: options,
-            exclusions: typeof exclusions === 'string' ? exclusions.split(',').map(s => s.trim()).filter(Boolean) : exclusions,
+            exclusions: exclusions,
             totalPrice: calculateItemTotal(),
         });
 
