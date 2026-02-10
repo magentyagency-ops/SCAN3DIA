@@ -33,13 +33,20 @@ export default function MenuPage() {
 
     useEffect(() => {
         fetch(`/api/restaurants/${slug}/menu`)
-            .then(res => res.json())
+            .then(async res => {
+                if (!res.ok) throw new Error(res.statusText);
+                return res.json();
+            })
             .then(d => {
+                if (d.error) throw new Error(d.error);
                 setData(d);
                 if (d.categories?.[0]) setActiveCategory(d.categories[0].id);
                 setLoading(false);
             })
-            .catch(() => setLoading(false));
+            .catch(err => {
+                console.error('Failed to load menu:', err);
+                setLoading(false);
+            });
     }, [slug]);
 
     // Scroll to category
