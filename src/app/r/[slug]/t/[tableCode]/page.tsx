@@ -84,9 +84,12 @@ export default function MenuPage() {
     const startAR = (item: MenuItem, mode: 'ar' | '3d' = 'ar') => {
         if (!item.modelUrl) {
             // Use a sample model for demo if none exists
+            // Fallback to Avocado if noodles.glb is not found (user didn't upload it yet)
+            // Ideally we would check if file exists, but client-side we can't easily.
+            // So we revert to Avocado for now to avoid black screen, until user uploads it.
             setActiveModel({
-                url: '/models/noodles.glb',
-                name: `${item.name} (Modèle : Nouilles)`,
+                url: 'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/Avocado/glTF-Binary/Avocado.glb',
+                name: `${item.name} (Modèle provisoire : Avocat - En attente du fichier noodles.glb)`,
                 forcedMode: mode
             });
         } else {
