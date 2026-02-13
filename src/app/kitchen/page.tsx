@@ -85,7 +85,7 @@ export default function KitchenScreen() {
 
     const updateStatus = async (orderId: string, newStatus: string) => {
         // Optimistic update
-        const updated = orders.map(o => o.id === orderId ? { ...o, status: newStatus } : o);
+        const updated = orders.map(o => o.id === orderId ? { ...o, status: newStatus as any } : o);
         setOrders(updated);
         ordersRef.current = updated;
 
