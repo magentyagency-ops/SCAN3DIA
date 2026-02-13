@@ -85,7 +85,7 @@ export default function MenuPage() {
         if (!item.modelUrl) {
             // Use a sample model for demo if none exists
             setActiveModel({
-                url: 'https://modelviewer.dev/shared-assets/models/Astronaut.glb',
+                url: 'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Hamburger/glTF-Binary/Hamburger.glb',
                 name: `${item.name} (Modèle de démo)`,
                 forcedMode: mode
             });
