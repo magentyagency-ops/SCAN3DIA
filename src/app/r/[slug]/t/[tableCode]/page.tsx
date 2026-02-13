@@ -78,21 +78,23 @@ export default function MenuPage() {
     }, [slug]);
 
     const [showAR, setShowAR] = useState(false);
-    const [activeModel, setActiveModel] = useState<{ url: string; iosUrl?: string; name: string } | null>(null);
+    const [activeModel, setActiveModel] = useState<{ url: string; iosUrl?: string; name: string; forcedMode?: 'ar' | '3d' } | null>(null);
 
     // AR Handling
-    const startAR = (item: MenuItem) => {
+    const startAR = (item: MenuItem, mode: 'ar' | '3d' = 'ar') => {
         if (!item.modelUrl) {
             // Use a sample model for demo if none exists
             setActiveModel({
                 url: 'https://modelviewer.dev/shared-assets/models/Astronaut.glb',
-                name: `${item.name} (Modèle de démo)`
+                name: `${item.name} (Modèle de démo)`,
+                forcedMode: mode
             });
         } else {
             setActiveModel({
                 url: item.modelUrl,
                 iosUrl: item.iosModelUrl || undefined,
-                name: item.name
+                name: item.name,
+                forcedMode: mode
             });
         }
         setShowAR(true);
@@ -362,21 +364,37 @@ export default function MenuPage() {
                                                 </span>
                                             ))}
                                         </div>
-                                        <button
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                startAR(signatureItem);
-                                            }}
-                                            className="flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-accent text-white
-                                                     text-xs font-bold hover:bg-accent-hover transition-all active:scale-95 shadow-lg shadow-accent/20"
-                                        >
-                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
-                                                <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
-                                                <line x1="12" y1="22.08" x2="12" y2="12" />
-                                            </svg>
-                                            Voir en 3D
-                                        </button>
+                                        <div className="flex gap-2">
+                                            <button
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    startAR(signatureItem, '3d');
+                                                }}
+                                                className="flex items-center gap-2 px-4 py-2 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-white
+                                                         text-[10px] font-bold hover:bg-white/20 transition-all active:scale-95"
+                                            >
+                                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                                                    <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+                                                    <line x1="12" y1="22.08" x2="12" y2="12" />
+                                                </svg>
+                                                3D
+                                            </button>
+                                            <button
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    startAR(signatureItem, 'ar');
+                                                }}
+                                                className="flex items-center gap-2 px-4 py-2 rounded-2xl bg-accent text-white
+                                                         text-[10px] font-bold hover:bg-accent-hover transition-all active:scale-95 shadow-lg shadow-accent/20"
+                                            >
+                                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                                    <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                                                    <circle cx="12" cy="12" r="3" />
+                                                </svg>
+                                                En RA
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -438,21 +456,37 @@ export default function MenuPage() {
                                                         ))}
                                                     </div>
 
-                                                    <button
-                                                        onClick={(e) => {
-                                                            e.stopPropagation();
-                                                            startAR(item);
-                                                        }}
-                                                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-accent text-white
-                                                                 text-[10px] font-bold hover:bg-accent-hover transition-all active:scale-95 shadow-md shadow-accent/10 shrink-0"
-                                                    >
-                                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                                                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
-                                                            <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
-                                                            <line x1="12" y1="22.08" x2="12" y2="12" />
-                                                        </svg>
-                                                        3D
-                                                    </button>
+                                                    <div className="flex gap-2 shrink-0 ml-2">
+                                                        <button
+                                                            onClick={(e) => {
+                                                                e.stopPropagation();
+                                                                startAR(item, '3d');
+                                                            }}
+                                                            className="flex items-center justify-center w-8 h-8 rounded-xl bg-surface-hover/50 text-text-secondary
+                                                                     hover:bg-surface-hover hover:text-text-primary transition-all active:scale-95 border border-border"
+                                                            title="Voir en 3D"
+                                                        >
+                                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                                                                <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+                                                                <line x1="12" y1="22.08" x2="12" y2="12" />
+                                                            </svg>
+                                                        </button>
+                                                        <button
+                                                            onClick={(e) => {
+                                                                e.stopPropagation();
+                                                                startAR(item, 'ar');
+                                                            }}
+                                                            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-accent text-white
+                                                                     text-[10px] font-bold hover:bg-accent-hover transition-all active:scale-95 shadow-md shadow-accent/10"
+                                                        >
+                                                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                                                <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                                                                <circle cx="12" cy="12" r="3" />
+                                                            </svg>
+                                                            RA
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -685,6 +719,7 @@ export default function MenuPage() {
                     iosModelUrl={activeModel.iosUrl}
                     itemName={activeModel.name}
                     onClose={stopAR}
+                    forcedMode={activeModel.forcedMode}
                 />
             )}
         </div>

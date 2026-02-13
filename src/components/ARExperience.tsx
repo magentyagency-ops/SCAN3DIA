@@ -11,9 +11,10 @@ interface ARExperienceProps {
     iosModelUrl?: string;
     itemName: string;
     onClose: () => void;
+    forcedMode?: 'ar' | '3d';
 }
 
-export default function ARExperience({ modelUrl, iosModelUrl, itemName, onClose }: ARExperienceProps) {
+export default function ARExperience({ modelUrl, iosModelUrl, itemName, onClose, forcedMode }: ARExperienceProps) {
     const [arState, setArState] = useState<ARState>('CHECKING');
     const [trackingQuality, setTrackingQuality] = useState<'good' | 'weak' | 'lost'>('good');
     const [loadProgress, setLoadProgress] = useState(0);
@@ -31,18 +32,30 @@ export default function ARExperience({ modelUrl, iosModelUrl, itemName, onClose 
 
             if (cancelled) return;
 
-            if (caps.webxr) {
-                setArState('PERMISSION');
-            } else if (caps.quickLook || caps.sceneViewer) {
+            if (forcedMode === 'ar') {
+                if (caps.webxr) {
+                    setArState('PERMISSION');
+                } else {
+                    // Even if WebXR not supported, we go to fallback which handles AR via model-viewer
+                    setArState('FALLBACK');
+                }
+            } else if (forcedMode === '3d') {
                 setArState('FALLBACK');
             } else {
-                setArState('FALLBACK');
+                // Auto mode (default)
+                if (caps.webxr) {
+                    setArState('PERMISSION');
+                } else if (caps.quickLook || caps.sceneViewer) {
+                    setArState('FALLBACK');
+                } else {
+                    setArState('FALLBACK');
+                }
             }
         }
 
         init();
         return () => { cancelled = true; };
-    }, []);
+    }, [forcedMode]);
 
     // Create engine when permission is requested
     const handleRequestPermission = useCallback(async () => {
@@ -145,7 +158,7 @@ export default function ARExperience({ modelUrl, iosModelUrl, itemName, onClose 
 
     // FALLBACK state - model-viewer with native AR
     if (arState === 'FALLBACK') {
-        return <ModelViewerFallback modelUrl={modelUrl} iosModelUrl={iosModelUrl} itemName={itemName} onClose={handleClose} />;
+        return <ModelViewerFallback modelUrl={modelUrl} iosModelUrl={iosModelUrl} itemName={itemName} onClose={handleClose} forcedMode={forcedMode} />;
     }
 
     // WebXR states (SCANNING, READY, PLACED)
@@ -202,8 +215,8 @@ export default function ARExperience({ modelUrl, iosModelUrl, itemName, onClose 
 
 // ---- Fallback: model-viewer (iOS / non-WebXR) ----
 
-function ModelViewerFallback({ modelUrl, iosModelUrl, itemName, onClose }: {
-    modelUrl: string; iosModelUrl?: string; itemName: string; onClose: () => void;
+function ModelViewerFallback({ modelUrl, iosModelUrl, itemName, onClose, forcedMode }: {
+    modelUrl: string; iosModelUrl?: string; itemName: string; onClose: () => void; forcedMode?: 'ar' | '3d';
 }) {
     const viewerContainerRef = useRef<HTMLDivElement>(null);
 
@@ -226,7 +239,12 @@ function ModelViewerFallback({ modelUrl, iosModelUrl, itemName, onClose }: {
         if (iosModelUrl) mv.setAttribute('ios-src', iosModelUrl);
         mv.setAttribute('alt', itemName);
         mv.setAttribute('ar', '');
-        mv.setAttribute('ar-modes', 'webxr scene-viewer quick-look');
+        if (forcedMode === 'ar') {
+            mv.setAttribute('ar-modes', 'webxr scene-viewer quick-look');
+            mv.setAttribute('activate', 'ar');
+        } else {
+            mv.setAttribute('ar-modes', 'webxr scene-viewer quick-look');
+        }
         mv.setAttribute('camera-controls', '');
         mv.setAttribute('touch-action', 'pan-y');
         mv.setAttribute('autoplay', '');
