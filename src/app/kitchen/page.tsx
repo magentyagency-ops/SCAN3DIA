@@ -17,8 +17,32 @@ export default function KitchenScreen() {
     const playNotification = () => {
         if (!soundEnabled) return;
         try {
-            const audio = new Audio('/notification.mp3');
-            audio.play().catch(e => console.log('Audio play failed', e));
+            // Web Audio API for reliable sound without external file
+            const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
+            if (!AudioContext) return;
+
+            const ctx = new AudioContext();
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+
+            // "iOS-like" Tri-tone ish (High C -> High E -> High G rapid broken chord)
+            // Actually simple pleasant "Ding" is safer
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(800, ctx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(400, ctx.currentTime + 0.1); // Chirp down
+
+            gain.gain.setValueAtTime(0.3, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.5);
+
+            osc.start();
+            osc.stop(ctx.currentTime + 0.5);
+
+            // Try playing file too as backup if exists/valid
+            // const audio = new Audio('/notification.mp3');
+            // audio.play().catch(() => {});
         } catch (e) {
             console.error(e);
         }
@@ -289,27 +313,6 @@ export default function KitchenScreen() {
                     </div>
                 )}
 
-                {/* Served orders */}
-                {servedOrders.length > 0 && (
-                    <div className="mt-10">
-                        <h2 className="text-sm font-semibold text-stone-500 uppercase tracking-wider mb-4">
-                            Commandes servies ({servedOrders.length})
-                        </h2>
-                        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-3">
-                            {servedOrders.slice(0, 8).map(order => (
-                                <div key={order.id} className="p-4 rounded-xl bg-stone-900/50 border border-stone-800 opacity-50">
-                                    <div className="flex items-center justify-between">
-                                        <span className="text-sm font-bold text-stone-400 kitchen-text">#{order.orderNumber}</span>
-                                        <span className="text-xs text-stone-500">{order.table?.label}</span>
-                                    </div>
-                                    <p className="text-xs text-stone-600 mt-1">
-                                        {order.items?.length} article{(order.items?.length || 0) > 1 ? 's' : ''} — {formatPrice(order.total)}
-                                    </p>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                )}
             </div>
         </div>
     );
