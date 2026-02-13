@@ -85,8 +85,8 @@ export default function MenuPage() {
         if (!item.modelUrl) {
             // Use a sample model for demo if none exists
             setActiveModel({
-                url: 'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Hamburger/glTF-Binary/Hamburger.glb',
-                name: `${item.name} (Modèle de démo)`,
+                url: 'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/Avocado/glTF-Binary/Avocado.glb',
+                name: `${item.name} (Modèle de démo : Avocat)`,
                 forcedMode: mode
             });
         } else {
