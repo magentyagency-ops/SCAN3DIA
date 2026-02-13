@@ -5,6 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { useCart } from '@/lib/cart-store';
 import { MenuData, MenuItem, Category, OptionGroup, CartItemOption } from '@/lib/types';
 import { formatPrice, parseTags, getTagLabel, getTagColor, cn } from '@/lib/utils';
+import ARExperience from '@/components/ARExperience';
 
 export default function MenuPage() {
     const params = useParams();
@@ -21,6 +22,7 @@ export default function MenuPage() {
     const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null);
     const [showSheet, setShowSheet] = useState(false);
     const [addedId, setAddedId] = useState<string | null>(null);
+    const [showDevMenu, setShowDevMenu] = useState(false);
 
     // Customization state
     const [selectedOptions, setSelectedOptions] = useState<Record<string, string | string[]>>({});
@@ -42,12 +44,64 @@ export default function MenuPage() {
                 setData(d);
                 if (d.categories?.[0]) setActiveCategory(d.categories[0].id);
                 setLoading(false);
+
+                // Apply theme
+                if (d.restaurant) {
+                    const root = document.documentElement;
+                    if (d.restaurant.accentColor) root.style.setProperty('--color-accent', d.restaurant.accentColor);
+
+                    if (d.restaurant.themeMode === 'DARK') {
+                        root.style.setProperty('--color-background', '#1C1917');
+                        root.style.setProperty('--color-surface', '#292524');
+                        root.style.setProperty('--color-surface-hover', '#44403C');
+                        root.style.setProperty('--color-border', '#44403C');
+                        root.style.setProperty('--color-border-subtle', '#292524');
+                        root.style.setProperty('--color-text-primary', '#F5F5F4');
+                        root.style.setProperty('--color-text-secondary', '#A8A29E');
+                        root.style.setProperty('--color-text-tertiary', '#78716C');
+                    } else {
+                        root.style.removeProperty('--color-background');
+                        root.style.removeProperty('--color-surface');
+                        root.style.removeProperty('--color-surface-hover');
+                        root.style.removeProperty('--color-border');
+                        root.style.removeProperty('--color-border-subtle');
+                        root.style.removeProperty('--color-text-primary');
+                        root.style.removeProperty('--color-text-secondary');
+                        root.style.removeProperty('--color-text-tertiary');
+                    }
+                }
             })
             .catch(err => {
                 console.error('Failed to load menu:', err);
                 setLoading(false);
             });
     }, [slug]);
+
+    const [showAR, setShowAR] = useState(false);
+    const [activeModel, setActiveModel] = useState<{ url: string; iosUrl?: string; name: string } | null>(null);
+
+    // AR Handling
+    const startAR = (item: MenuItem) => {
+        if (!item.modelUrl) {
+            // Use a sample model for demo if none exists
+            setActiveModel({
+                url: 'https://modelviewer.dev/shared-assets/models/Astronaut.glb',
+                name: `${item.name} (Modèle de démo)`
+            });
+        } else {
+            setActiveModel({
+                url: item.modelUrl,
+                iosUrl: item.iosModelUrl || undefined,
+                name: item.name
+            });
+        }
+        setShowAR(true);
+    };
+
+    const stopAR = () => {
+        setShowAR(false);
+        setActiveModel(null);
+    };
 
     // Scroll to category
     const scrollToCategory = (catId: string) => {
@@ -172,9 +226,45 @@ export default function MenuPage() {
             <header className="glass sticky top-0 z-40 border-b border-border-subtle">
                 <div className="max-w-lg mx-auto px-5 py-4">
                     <div className="flex items-center justify-between">
-                        <div>
-                            <h1 className="text-xl font-bold text-text-primary tracking-tight">{restaurant.name}</h1>
-                            <p className="text-xs text-text-tertiary mt-0.5">Table {tableCode}</p>
+                        <div className="flex items-center gap-3">
+                            <div className="relative">
+                                <button
+                                    onClick={() => setShowDevMenu(!showDevMenu)}
+                                    className="w-10 h-10 rounded-xl bg-surface border border-border flex items-center justify-center
+                                             hover:bg-surface-hover transition-all active:scale-95"
+                                >
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
+                                    </svg>
+                                </button>
+
+                                {showDevMenu && (
+                                    <>
+                                        <div className="fixed inset-0 z-50 mr-4" onClick={() => setShowDevMenu(false)} />
+                                        <div className="absolute top-12 left-0 w-48 bg-surface border border-border rounded-2xl shadow-xl z-[60] overflow-hidden animate-scale-in">
+                                            <div className="p-2 border-b border-border bg-stone-50">
+                                                <p className="text-[10px] font-bold text-text-tertiary uppercase tracking-wider px-3">Navigation Rapide</p>
+                                            </div>
+                                            <button
+                                                onClick={() => router.push('/kitchen')}
+                                                className="w-full flex items-center gap-3 px-4 py-3 text-sm text-text-primary hover:bg-surface-hover transition-colors"
+                                            >
+                                                👨‍🍳 Kitchen Screen
+                                            </button>
+                                            <button
+                                                onClick={() => router.push('/admin')}
+                                                className="w-full flex items-center gap-3 px-4 py-3 text-sm text-text-primary hover:bg-surface-hover transition-colors"
+                                            >
+                                                ⚙️ Back Office
+                                            </button>
+                                        </div>
+                                    </>
+                                )}
+                            </div>
+                            <div>
+                                <h1 className="text-xl font-bold text-text-primary tracking-tight">{restaurant.name}</h1>
+                                <p className="text-xs text-text-tertiary mt-0.5">Table {tableCode}</p>
+                            </div>
                         </div>
                         <button
                             onClick={() => router.push(`/r/${slug}/t/${tableCode}/cart`)}
@@ -245,8 +335,12 @@ export default function MenuPage() {
                                         ⭐ Plat Signature
                                     </span>
                                 </div>
-                                <div className="h-48 bg-gradient-to-br from-amber-100/50 to-orange-100/50 flex items-center justify-center">
-                                    <span className="text-6xl">🥩</span>
+                                <div className="h-48 bg-gradient-to-br from-amber-100/50 to-orange-100/50 flex items-center justify-center overflow-hidden relative">
+                                    {signatureItem.image ? (
+                                        <img src={signatureItem.image} alt={signatureItem.name} className="w-full h-full object-cover" />
+                                    ) : (
+                                        <span className="text-6xl">🥩</span>
+                                    )}
                                 </div>
                                 <div className="p-5">
                                     <div className="flex items-start justify-between">
@@ -260,12 +354,29 @@ export default function MenuPage() {
                                             {formatPrice(signatureItem.price, restaurant.currency)}
                                         </span>
                                     </div>
-                                    <div className="flex gap-1.5 mt-3">
-                                        {parseTags(signatureItem.tags).map(tag => (
-                                            <span key={tag} className={`text-[11px] font-medium px-2 py-1 rounded-full border ${getTagColor(tag)}`}>
-                                                {getTagLabel(tag)}
-                                            </span>
-                                        ))}
+                                    <div className="flex items-center justify-between mt-3">
+                                        <div className="flex gap-1.5">
+                                            {parseTags(signatureItem.tags).map(tag => (
+                                                <span key={tag} className={`text-[11px] font-medium px-2 py-1 rounded-full border ${getTagColor(tag)}`}>
+                                                    {getTagLabel(tag)}
+                                                </span>
+                                            ))}
+                                        </div>
+                                        <button
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                startAR(signatureItem);
+                                            }}
+                                            className="flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-accent text-white
+                                                     text-xs font-bold hover:bg-accent-hover transition-all active:scale-95 shadow-lg shadow-accent/20"
+                                        >
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                                                <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+                                                <line x1="12" y1="22.08" x2="12" y2="12" />
+                                            </svg>
+                                            Voir en 3D
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -296,10 +407,15 @@ export default function MenuPage() {
                                             addedId === item.id && 'ring-2 ring-accent/30 bg-accent-light'
                                         )}>
                                             {/* Image placeholder */}
-                                            <div className="w-20 h-20 rounded-xl bg-gradient-to-br from-stone-100 to-stone-50 flex items-center justify-center shrink-0 overflow-hidden">
-                                                <span className="text-3xl">
-                                                    {cat.slug === 'entrees' ? '🥗' : cat.slug === 'plats' ? '🍽️' : cat.slug === 'desserts' ? '🍰' : '🥤'}
-                                                </span>
+                                            {/* Image placeholder */}
+                                            <div className="relative w-24 h-24 rounded-xl bg-gradient-to-br from-stone-100 to-stone-50 flex items-center justify-center shrink-0 overflow-hidden">
+                                                {item.image ? (
+                                                    <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                                                ) : (
+                                                    <span className="text-4xl">
+                                                        {cat.slug === 'entrees' ? '🥗' : cat.slug === 'plats' ? '🍽️' : cat.slug === 'desserts' ? '🍰' : '🥤'}
+                                                    </span>
+                                                )}
                                             </div>
                                             {/* Content */}
                                             <div className="flex-1 min-w-0">
@@ -312,17 +428,31 @@ export default function MenuPage() {
                                                     </span>
                                                 </div>
                                                 <p className="text-xs text-text-secondary mt-1 line-clamp-2 leading-relaxed">{item.description}</p>
-                                                <div className="flex gap-1.5 mt-2.5 flex-wrap">
-                                                    {parseTags(item.tags).map(tag => (
-                                                        <span key={tag} className={`text-[10px] font-medium px-2 py-0.5 rounded-full border ${getTagColor(tag)}`}>
-                                                            {getTagLabel(tag)}
-                                                        </span>
-                                                    ))}
-                                                    {item.allergens?.length > 0 && (
-                                                        <span className="text-[10px] text-text-tertiary flex items-center gap-0.5">
-                                                            {item.allergens.map(a => a.allergen.icon).join(' ')}
-                                                        </span>
-                                                    )}
+
+                                                <div className="flex items-center justify-between mt-3 gap-2">
+                                                    <div className="flex gap-1.5 flex-wrap">
+                                                        {parseTags(item.tags).map(tag => (
+                                                            <span key={tag} className={`text-[10px] font-medium px-2 py-0.5 rounded-full border ${getTagColor(tag)}`}>
+                                                                {getTagLabel(tag)}
+                                                            </span>
+                                                        ))}
+                                                    </div>
+
+                                                    <button
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            startAR(item);
+                                                        }}
+                                                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-accent text-white
+                                                                 text-[10px] font-bold hover:bg-accent-hover transition-all active:scale-95 shadow-md shadow-accent/10 shrink-0"
+                                                    >
+                                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                                                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                                                            <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+                                                            <line x1="12" y1="22.08" x2="12" y2="12" />
+                                                        </svg>
+                                                        3D
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -367,32 +497,57 @@ export default function MenuPage() {
                     <div className="absolute bottom-0 left-0 right-0 animate-slide-up" onClick={e => e.stopPropagation()}>
                         <div className="max-w-lg mx-auto bg-surface rounded-t-3xl max-h-[90vh] overflow-y-auto">
                             {/* Item header */}
+                            {/* Image container */}
                             <div className="relative">
-                                <div className="h-52 bg-gradient-to-br from-stone-100 to-stone-50 flex items-center justify-center rounded-t-3xl">
-                                    <span className="text-7xl">
-                                        {categories.find(c => c.id === selectedItem.categoryId)?.slug === 'entrees' ? '🥗' :
-                                            categories.find(c => c.id === selectedItem.categoryId)?.slug === 'plats' ? '🍽️' :
-                                                categories.find(c => c.id === selectedItem.categoryId)?.slug === 'desserts' ? '🍰' : '🥤'}
-                                    </span>
+                                <div className="h-56 bg-gradient-to-br from-stone-100 to-stone-50 flex items-center justify-center rounded-t-3xl relative overflow-hidden">
+                                    {/* Decorative background circle */}
+                                    <div className="absolute w-40 h-40 bg-accent/5 rounded-full blur-2xl" />
+
+                                    {selectedItem.image ? (
+                                        <img src={selectedItem.image} alt={selectedItem.name} className="w-full h-full object-cover relative z-10" />
+                                    ) : (
+                                        <span className="text-8xl relative z-10 animate-bounce-slow">
+                                            {categories.find(c => c.id === selectedItem.categoryId)?.slug === 'entrees' ? '🥗' :
+                                                categories.find(c => c.id === selectedItem.categoryId)?.slug === 'plats' ? '🍽️' :
+                                                    categories.find(c => c.id === selectedItem.categoryId)?.slug === 'desserts' ? '🍰' : '🥤'}
+                                        </span>
+                                    )}
                                 </div>
+
+                                {/* AR Button - Positonned "En dessous de l'assiette" */}
+                                <div className="absolute -bottom-5 left-1/2 -translate-x-1/2 z-20">
+                                    <button
+                                        onClick={() => startAR(selectedItem)}
+                                        className="flex items-center gap-2 px-6 py-3 rounded-full bg-accent text-white shadow-xl shadow-accent/30 
+                                                     hover:bg-accent-hover transition-all active:scale-95 text-sm font-bold border-2 border-white"
+                                    >
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                                            <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+                                            <line x1="12" y1="22.08" x2="12" y2="12" />
+                                        </svg>
+                                        Voir en 3D
+                                    </button>
+                                </div>
+
                                 <button
                                     onClick={() => setShowSheet(false)}
-                                    className="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/80 backdrop-blur flex items-center justify-center
-                             text-text-secondary hover:bg-white transition-all"
+                                    className="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/10 backdrop-blur-md flex items-center justify-center
+                                                 text-text-primary hover:bg-white/20 transition-all z-20"
                                 >
                                     ✕
                                 </button>
                             </div>
 
-                            <div className="p-6">
+                            <div className="p-6 pt-10">
                                 {/* Name and price */}
                                 <div className="flex items-start justify-between mb-2">
                                     <h2 className="text-2xl font-bold text-text-primary">{selectedItem.name}</h2>
                                     <span className="text-2xl font-bold text-accent ml-3">{formatPrice(selectedItem.price, restaurant.currency)}</span>
                                 </div>
 
-                                {/* Badges */}
-                                <div className="flex gap-2 mb-3">
+                                {/* Badges only here */}
+                                <div className="flex gap-2 mb-4">
                                     {parseTags(selectedItem.tags).map(tag => (
                                         <span key={tag} className={`text-xs font-medium px-2.5 py-1 rounded-full border ${getTagColor(tag)}`}>
                                             {getTagLabel(tag)}
@@ -521,6 +676,16 @@ export default function MenuPage() {
                         </div>
                     </div>
                 </div>
+            )}
+
+            {/* AR Experience */}
+            {showAR && activeModel && (
+                <ARExperience
+                    modelUrl={activeModel.url}
+                    iosModelUrl={activeModel.iosUrl}
+                    itemName={activeModel.name}
+                    onClose={stopAR}
+                />
             )}
         </div>
     );

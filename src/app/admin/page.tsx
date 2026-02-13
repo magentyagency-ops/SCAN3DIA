@@ -28,11 +28,65 @@ export default function AdminDashboard() {
     const [newTableCode, setNewTableCode] = useState('');
     const [newTableLabel, setNewTableLabel] = useState('');
 
+    // Editing State
+    const [editingItem, setEditingItem] = useState<any>(null);
+    const [settingsForm, setSettingsForm] = useState({
+        accentColor: '#E85D04',
+        themeMode: 'LIGHT',
+    });
+
     useEffect(() => {
         fetch('/api/admin/analytics?restaurantSlug=le-jardin').then(r => r.json()).then(setAnalytics);
-        fetch('/api/admin/menu?restaurantSlug=le-jardin').then(r => r.json()).then(setMenuData);
+        fetch('/api/admin/menu?restaurantSlug=le-jardin').then(r => r.json()).then(d => {
+            setMenuData(d);
+            setSettingsForm({
+                accentColor: d.accentColor || '#E85D04',
+                themeMode: d.themeMode || 'LIGHT',
+            });
+        });
         fetch('/api/admin/tables?restaurantSlug=le-jardin').then(r => r.json()).then(setTables);
     }, []);
+
+    const saveSettings = async () => {
+        try {
+            const res = await fetch('/api/admin/restaurant', {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    slug: 'le-jardin',
+                    ...settingsForm
+                }),
+            });
+            if (res.ok) {
+                const updated = await res.json();
+                setMenuData((prev: any) => ({ ...prev, ...updated }));
+                setSettingsForm({
+                    accentColor: updated.accentColor,
+                    themeMode: updated.themeMode
+                });
+                alert('Paramètres sauvegardés !');
+            }
+        } catch (e) {
+            console.error(e);
+            alert('Erreur lors de la sauvegarde');
+        }
+    };
+
+    const saveEditedItem = async () => {
+        if (!editingItem) return;
+        try {
+            await fetch('/api/admin/menu', {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(editingItem),
+            });
+            setEditingItem(null);
+            const res = await fetch('/api/admin/menu?restaurantSlug=le-jardin');
+            setMenuData(await res.json());
+        } catch (e) {
+            alert('Erreur lors de la modification');
+        }
+    };
 
     const toggleAvailability = async (itemId: string, isAvailable: boolean) => {
         await fetch('/api/admin/menu', {
@@ -222,7 +276,7 @@ export default function AdminDashboard() {
                                                     <p className="text-xs text-text-secondary truncate mt-0.5">{item.description}</p>
                                                 </div>
                                             </div>
-                                            <div className="flex items-center gap-3 shrink-0 ml-4">
+                                            <div className="flex items-center gap-2 shrink-0 ml-4">
                                                 <span className="font-bold text-accent">{formatPrice(item.price)}</span>
                                                 <button
                                                     onClick={() => toggleAvailability(item.id, item.isAvailable)}
@@ -234,6 +288,12 @@ export default function AdminDashboard() {
                                                     )}
                                                 >
                                                     {item.isAvailable ? 'En stock' : 'Rupture'}
+                                                </button>
+                                                <button
+                                                    onClick={() => setEditingItem(item)}
+                                                    className="p-1.5 rounded-lg text-text-tertiary hover:bg-surface-hover hover:text-accent transition-all"
+                                                >
+                                                    ✏️
                                                 </button>
                                                 <button
                                                     onClick={() => deleteItem(item.id)}
@@ -249,129 +309,259 @@ export default function AdminDashboard() {
                                 </div>
                             </div>
                         ))}
+
+                        {/* Edit Item Modal */}
+                        {editingItem && (
+                            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 animate-fade-in">
+                                <div className="w-full max-w-lg bg-surface rounded-2xl shadow-2xl p-6 animate-scale-in">
+                                    <h3 className="text-xl font-bold text-text-primary mb-6">Modifier : {editingItem.name}</h3>
+
+                                    <div className="space-y-4 max-h-[60vh] overflow-y-auto pr-2">
+                                        <div>
+                                            <label className="text-xs font-bold text-text-secondary uppercase mb-1.5 block">Nom du plat</label>
+                                            <input
+                                                value={editingItem.name}
+                                                onChange={e => setEditingItem({ ...editingItem, name: e.target.value })}
+                                                className="w-full px-4 py-3 rounded-xl bg-background border border-border focus:ring-2 focus:ring-accent/20 outline-none transition-all"
+                                            />
+                                        </div>
+
+                                        <div>
+                                            <label className="text-xs font-bold text-text-secondary uppercase mb-1.5 block">Description</label>
+                                            <textarea
+                                                value={editingItem.description || ''}
+                                                onChange={e => setEditingItem({ ...editingItem, description: e.target.value })}
+                                                className="w-full px-4 py-3 rounded-xl bg-background border border-border h-24 focus:ring-2 focus:ring-accent/20 outline-none resize-none transition-all"
+                                            />
+                                        </div>
+
+                                        <div className="grid grid-cols-2 gap-4">
+                                            <div>
+                                                <label className="text-xs font-bold text-text-secondary uppercase mb-1.5 block">Prix (€)</label>
+                                                <input
+                                                    type="number"
+                                                    value={editingItem.price}
+                                                    onChange={e => setEditingItem({ ...editingItem, price: e.target.value })}
+                                                    className="w-full px-4 py-3 rounded-xl bg-background border border-border focus:ring-2 focus:ring-accent/20 outline-none transition-all"
+                                                />
+                                            </div>
+                                            <div>
+                                                <label className="text-xs font-bold text-text-secondary uppercase mb-1.5 block">Type</label>
+                                                <div className="flex items-center gap-3 h-[46px] px-3">
+                                                    <label className="flex items-center gap-2 cursor-pointer">
+                                                        <input
+                                                            type="checkbox"
+                                                            checked={editingItem.isSignature}
+                                                            onChange={e => setEditingItem({ ...editingItem, isSignature: e.target.checked })}
+                                                            className="w-5 h-5 accent-accent"
+                                                        />
+                                                        <span className="text-sm font-medium">Signature ⭐</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <label className="text-xs font-bold text-text-secondary uppercase mb-1.5 block">Image (URL)</label>
+                                            <div className="flex gap-4">
+                                                {editingItem.image && (
+                                                    <img src={editingItem.image} alt="Preview" className="w-12 h-12 rounded-lg object-cover bg-stone-100 border border-border" />
+                                                )}
+                                                <input
+                                                    placeholder="https://..."
+                                                    value={editingItem.image || ''}
+                                                    onChange={e => setEditingItem({ ...editingItem, image: e.target.value })}
+                                                    className="flex-1 px-4 py-3 rounded-xl bg-background border border-border focus:ring-2 focus:ring-accent/20 outline-none transition-all text-sm"
+                                                />
+                                            </div>
+                                            <p className="text-[10px] text-text-tertiary mt-1">Copiez-collez l'URL d'une image (ex: Unsplash, Cloudinary...).</p>
+                                        </div>
+                                    </div>
+
+                                    <div className="flex gap-3 mt-8 pt-4 border-t border-border">
+                                        <button
+                                            onClick={() => setEditingItem(null)}
+                                            className="flex-1 py-3 rounded-xl border border-border font-semibold text-text-secondary hover:bg-surface-hover transition-all"
+                                        >
+                                            Annuler
+                                        </button>
+                                        <button
+                                            onClick={saveEditedItem}
+                                            className="flex-1 py-3 rounded-xl bg-accent text-white font-bold shadow-lg shadow-accent/20 hover:bg-accent-hover transition-all"
+                                        >
+                                            Enregistrer
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
                     </div>
-                )}
+                )
+                }
 
                 {/* TABLES TAB */}
-                {activeTab === 'tables' && (
-                    <div className="animate-fade-in-up">
-                        {/* Add table form */}
-                        <div className="p-6 rounded-2xl bg-surface border border-border mb-6">
-                            <h3 className="text-sm font-semibold text-text-primary mb-4">➕ Ajouter une table</h3>
-                            <div className="flex gap-3">
-                                <input
-                                    placeholder="Code (ex: T4)"
-                                    value={newTableCode}
-                                    onChange={e => setNewTableCode(e.target.value)}
-                                    className="flex-1 px-4 py-3 rounded-xl bg-background border border-border text-sm focus:outline-none focus:ring-2 focus:ring-accent/20"
-                                />
-                                <input
-                                    placeholder="Label (ex: Table 4)"
-                                    value={newTableLabel}
-                                    onChange={e => setNewTableLabel(e.target.value)}
-                                    className="flex-1 px-4 py-3 rounded-xl bg-background border border-border text-sm focus:outline-none focus:ring-2 focus:ring-accent/20"
-                                />
-                                <button
-                                    onClick={addTable}
-                                    className="px-6 py-3 rounded-xl bg-accent text-white font-semibold text-sm hover:bg-accent-hover transition-all active:scale-95"
-                                >
-                                    Ajouter
-                                </button>
+                {
+                    activeTab === 'tables' && (
+                        <div className="animate-fade-in-up">
+                            {/* Add table form */}
+                            <div className="p-6 rounded-2xl bg-surface border border-border mb-6">
+                                <h3 className="text-sm font-semibold text-text-primary mb-4">➕ Ajouter une table</h3>
+                                <div className="flex gap-3">
+                                    <input
+                                        placeholder="Code (ex: T4)"
+                                        value={newTableCode}
+                                        onChange={e => setNewTableCode(e.target.value)}
+                                        className="flex-1 px-4 py-3 rounded-xl bg-background border border-border text-sm focus:outline-none focus:ring-2 focus:ring-accent/20"
+                                    />
+                                    <input
+                                        placeholder="Label (ex: Table 4)"
+                                        value={newTableLabel}
+                                        onChange={e => setNewTableLabel(e.target.value)}
+                                        className="flex-1 px-4 py-3 rounded-xl bg-background border border-border text-sm focus:outline-none focus:ring-2 focus:ring-accent/20"
+                                    />
+                                    <button
+                                        onClick={addTable}
+                                        className="px-6 py-3 rounded-xl bg-accent text-white font-semibold text-sm hover:bg-accent-hover transition-all active:scale-95"
+                                    >
+                                        Ajouter
+                                    </button>
+                                </div>
                             </div>
-                        </div>
 
-                        {/* Tables list */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                            {tables.map(table => {
-                                const qrUrl = `${typeof window !== 'undefined' ? window.location.origin : ''}/r/le-jardin/t/${table.tableCode}`;
-                                return (
-                                    <div key={table.id} className="p-5 rounded-2xl bg-surface border border-border">
-                                        <div className="flex items-center justify-between mb-3">
-                                            <div>
-                                                <h3 className="font-bold text-text-primary">{table.label}</h3>
-                                                <p className="text-xs text-text-tertiary">Code: {table.tableCode}</p>
+                            {/* Tables list */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                {tables.map(table => {
+                                    const qrUrl = `${typeof window !== 'undefined' ? window.location.origin : ''}/r/le-jardin/t/${table.tableCode}`;
+                                    return (
+                                        <div key={table.id} className="p-5 rounded-2xl bg-surface border border-border">
+                                            <div className="flex items-center justify-between mb-3">
+                                                <div>
+                                                    <h3 className="font-bold text-text-primary">{table.label}</h3>
+                                                    <p className="text-xs text-text-tertiary">Code: {table.tableCode}</p>
+                                                </div>
+                                                <button
+                                                    onClick={() => deleteTable(table.id)}
+                                                    className="text-text-tertiary hover:text-danger transition-colors p-1"
+                                                >
+                                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 6h18" /><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" /></svg>
+                                                </button>
+                                            </div>
+                                            <div className="p-3 rounded-xl bg-background border border-border-subtle mb-3">
+                                                <p className="text-xs text-text-secondary break-all font-mono">{qrUrl}</p>
                                             </div>
                                             <button
-                                                onClick={() => deleteTable(table.id)}
-                                                className="text-text-tertiary hover:text-danger transition-colors p-1"
+                                                onClick={() => copyToClipboard(qrUrl)}
+                                                className="w-full py-2.5 rounded-xl bg-accent-light text-accent text-sm font-medium hover:bg-accent/10 transition-all"
                                             >
-                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 6h18" /><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" /></svg>
+                                                📋 Copier le lien
                                             </button>
+                                            {/* Recent orders count */}
+                                            {table.orders?.length > 0 && (
+                                                <p className="text-[10px] text-text-tertiary mt-3 text-center">
+                                                    {table.orders.length} commande{table.orders.length > 1 ? 's' : ''} récente{table.orders.length > 1 ? 's' : ''}
+                                                </p>
+                                            )}
                                         </div>
-                                        <div className="p-3 rounded-xl bg-background border border-border-subtle mb-3">
-                                            <p className="text-xs text-text-secondary break-all font-mono">{qrUrl}</p>
-                                        </div>
-                                        <button
-                                            onClick={() => copyToClipboard(qrUrl)}
-                                            className="w-full py-2.5 rounded-xl bg-accent-light text-accent text-sm font-medium hover:bg-accent/10 transition-all"
-                                        >
-                                            📋 Copier le lien
-                                        </button>
-                                        {/* Recent orders count */}
-                                        {table.orders?.length > 0 && (
-                                            <p className="text-[10px] text-text-tertiary mt-3 text-center">
-                                                {table.orders.length} commande{table.orders.length > 1 ? 's' : ''} récente{table.orders.length > 1 ? 's' : ''}
-                                            </p>
-                                        )}
-                                    </div>
-                                );
-                            })}
+                                    );
+                                })}
+                            </div>
                         </div>
-                    </div>
-                )}
+                    )
+                }
 
                 {/* SETTINGS TAB */}
-                {activeTab === 'settings' && menuData && (
-                    <div className="max-w-xl animate-fade-in-up">
-                        <div className="p-6 rounded-2xl bg-surface border border-border">
-                            <h3 className="text-lg font-bold text-text-primary mb-6">Restaurant</h3>
-                            <div className="space-y-4">
-                                <div>
-                                    <label className="text-xs font-medium text-text-secondary mb-1.5 block">Nom</label>
-                                    <input
-                                        value={menuData.name || ''}
-                                        readOnly
-                                        className="w-full px-4 py-3 rounded-xl bg-background border border-border text-sm"
-                                    />
+                {
+                    activeTab === 'settings' && menuData && (
+                        <div className="max-w-xl animate-fade-in-up">
+                            <div className="p-6 rounded-2xl bg-surface border border-border">
+                                <div className="flex items-center justify-between mb-6">
+                                    <h3 className="text-lg font-bold text-text-primary">Apparence & Ambiance</h3>
+                                    <button
+                                        onClick={saveSettings}
+                                        className="px-6 py-2 rounded-xl bg-accent text-white font-bold text-sm shadow-md hover:bg-accent-hover transition-all active:scale-95"
+                                    >
+                                        Sauvegarder
+                                    </button>
                                 </div>
-                                <div>
-                                    <label className="text-xs font-medium text-text-secondary mb-1.5 block">Adresse</label>
-                                    <input
-                                        value={menuData.address || ''}
-                                        readOnly
-                                        className="w-full px-4 py-3 rounded-xl bg-background border border-border text-sm"
-                                    />
-                                </div>
-                                <div>
-                                    <label className="text-xs font-medium text-text-secondary mb-1.5 block">Horaires</label>
-                                    <input
-                                        value={menuData.openingHours || ''}
-                                        readOnly
-                                        className="w-full px-4 py-3 rounded-xl bg-background border border-border text-sm"
-                                    />
-                                </div>
-                                <div className="grid grid-cols-2 gap-4">
+
+                                <div className="space-y-6">
                                     <div>
-                                        <label className="text-xs font-medium text-text-secondary mb-1.5 block">Taxes</label>
-                                        <input
-                                            value={`${(menuData.taxRate * 100).toFixed(0)}%`}
-                                            readOnly
-                                            className="w-full px-4 py-3 rounded-xl bg-background border border-border text-sm"
-                                        />
+                                        <label className="text-sm font-bold text-text-secondary mb-3 block">Couleur Principale (Accent)</label>
+                                        <div className="flex gap-3 items-center">
+                                            <input
+                                                type="color"
+                                                value={settingsForm.accentColor}
+                                                onChange={e => setSettingsForm({ ...settingsForm, accentColor: e.target.value })}
+                                                className="w-12 h-12 rounded-xl cursor-pointer border-0 bg-transparent p-0"
+                                            />
+                                            <input
+                                                value={settingsForm.accentColor}
+                                                onChange={e => setSettingsForm({ ...settingsForm, accentColor: e.target.value })}
+                                                className="flex-1 px-4 py-3 rounded-xl bg-background border border-border text-sm font-mono uppercase"
+                                            />
+                                        </div>
                                     </div>
+
                                     <div>
-                                        <label className="text-xs font-medium text-text-secondary mb-1.5 block">Couleur accent</label>
-                                        <div className="flex items-center gap-2 px-4 py-3 rounded-xl bg-background border border-border">
-                                            <div className="w-5 h-5 rounded-full" style={{ backgroundColor: menuData.accentColor }} />
-                                            <span className="text-sm">{menuData.accentColor}</span>
+                                        <label className="text-sm font-bold text-text-secondary mb-3 block">Thème (Mode Sombre / Clair)</label>
+                                        <div className="grid grid-cols-2 gap-3">
+                                            <button
+                                                onClick={() => setSettingsForm({ ...settingsForm, themeMode: 'LIGHT' })}
+                                                className={cn(
+                                                    'p-4 rounded-xl border-2 flex flex-col items-center gap-2 transition-all',
+                                                    settingsForm.themeMode !== 'DARK'
+                                                        ? 'border-accent bg-accent/5'
+                                                        : 'border-border bg-background text-text-secondary'
+                                                )}
+                                            >
+                                                <span className="text-2xl">☀️</span>
+                                                <span className="font-bold text-sm">Mode Clair</span>
+                                            </button>
+                                            <button
+                                                onClick={() => setSettingsForm({ ...settingsForm, themeMode: 'DARK' })}
+                                                className={cn(
+                                                    'p-4 rounded-xl border-2 flex flex-col items-center gap-2 transition-all',
+                                                    settingsForm.themeMode === 'DARK'
+                                                        ? 'border-accent bg-accent/5'
+                                                        : 'border-border bg-background text-text-secondary'
+                                                )}
+                                            >
+                                                <span className="text-2xl">🌙</span>
+                                                <span className="font-bold text-sm">Mode Sombre</span>
+                                            </button>
+                                        </div>
+                                        <p className="text-xs text-text-tertiary mt-2">
+                                            Change l'apparence globale du menu client.
+                                        </p>
+                                    </div>
+
+                                    <div className="pt-6 border-t border-border">
+                                        <h4 className="text-sm font-bold text-text-primary mb-4">Informations Restaurant</h4>
+                                        <div className="grid grid-cols-2 gap-4">
+                                            <div>
+                                                <label className="text-xs font-medium text-text-secondary mb-1.5 block">Nom</label>
+                                                <input
+                                                    value={menuData.name || ''}
+                                                    readOnly
+                                                    className="w-full px-4 py-3 rounded-xl bg-background/50 border border-border text-sm text-text-tertiary cursor-not-allowed"
+                                                />
+                                            </div>
+                                            <div>
+                                                <label className="text-xs font-medium text-text-secondary mb-1.5 block">Slug URL</label>
+                                                <input
+                                                    value={menuData.slug || ''}
+                                                    readOnly
+                                                    className="w-full px-4 py-3 rounded-xl bg-background/50 border border-border text-sm text-text-tertiary cursor-not-allowed"
+                                                />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                )}
-            </div>
-        </div>
+                    )
+                }
+            </div >
+        </div >
     );
 }

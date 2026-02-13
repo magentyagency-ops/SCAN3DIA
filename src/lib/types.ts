@@ -9,6 +9,9 @@ export interface Restaurant {
     phone: string | null;
     logo: string | null;
     accentColor: string;
+    secondaryColor?: string;
+    themeMode?: 'LIGHT' | 'DARK';
+    font?: string;
     taxRate: number;
     currency: string;
     openingHours: string | null;
@@ -30,6 +33,8 @@ export interface MenuItem {
     image: string | null;
     mediaType: string;
     mediaUrl: string | null;
+    modelUrl: string | null;
+    iosModelUrl: string | null;
     isAvailable: boolean;
     isSignature: boolean;
     tags: string | null;

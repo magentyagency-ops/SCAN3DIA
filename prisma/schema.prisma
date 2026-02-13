@@ -12,148 +12,152 @@ model User {
   email     String   @unique
   password  String
   name      String
-  role      String   @default("CLIENT") // CLIENT, RESTAURATEUR, CUISINE, ADMIN
+  role      String   @default("CLIENT")
   createdAt DateTime @default(now())
 }
 
 model Restaurant {
-  id          String   @id @default(cuid())
-  name        String
-  slug        String   @unique
-  description String?
-  address     String?
-  phone       String?
-  logo        String?
-  accentColor String   @default("#E85D04")
-  taxRate     Float    @default(0.1)
-  currency    String   @default("€")
-  openingHours String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  categories Category[]
-  tables     RestaurantTable[]
-  orders     Order[]
-  allergens  Allergen[]
+  id             String            @id @default(cuid())
+  name           String
+  slug           String            @unique
+  description    String?
+  address        String?
+  phone          String?
+  logo           String?
+  accentColor    String            @default("#E85D04")
+  secondaryColor String            @default("#1C1917")
+  themeMode      String            @default("LIGHT")
+  font           String            @default("Inter")
+  taxRate        Float             @default(0.1)
+  currency       String            @default("€")
+  openingHours   String?
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+  allergens      Allergen[]
+  categories     Category[]
+  orders         Order[]
+  tables         RestaurantTable[]
 }
 
 model Category {
-  id           String   @id @default(cuid())
+  id           String     @id @default(cuid())
   name         String
   slug         String
-  sortOrder    Int      @default(0)
+  sortOrder    Int        @default(0)
   restaurantId String
+  createdAt    DateTime   @default(now())
   restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   items        MenuItem[]
-  createdAt    DateTime @default(now())
 
   @@unique([restaurantId, slug])
 }
 
 model MenuItem {
-  id          String   @id @default(cuid())
-  name        String
-  description String?
-  price       Float
-  image       String?
-  mediaType   String   @default("image") // image, video, 3d
-  mediaUrl    String?
-  isAvailable Boolean  @default(true)
-  isSignature Boolean  @default(false)
-  tags        String?  // JSON array: ["spicy","veggie","best-seller","new"]
-  sortOrder   Int      @default(0)
-  categoryId  String
-  category    Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  optionGroups OptionGroup[]
+  id           String             @id @default(cuid())
+  name         String
+  description  String?
+  price        Float
+  image        String?
+  mediaType    String             @default("image")
+  mediaUrl     String?
+  modelUrl     String?
+  iosModelUrl  String?
+  isAvailable  Boolean            @default(true)
+  isSignature  Boolean            @default(false)
+  tags         String?
+  sortOrder    Int                @default(0)
+  categoryId   String
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+  category     Category           @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   allergens    MenuItemAllergen[]
+  optionGroups OptionGroup[]
   orderItems   OrderItem[]
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
 }
 
 model OptionGroup {
-  id         String   @id @default(cuid())
+  id         String       @id @default(cuid())
   name       String
-  type       String   @default("radio") // radio, checkbox
-  required   Boolean  @default(false)
+  type       String       @default("radio")
+  required   Boolean      @default(false)
   menuItemId String
-  menuItem   MenuItem @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
+  sortOrder  Int          @default(0)
+  menuItem   MenuItem     @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
   options    OptionItem[]
-  sortOrder  Int      @default(0)
 }
 
 model OptionItem {
-  id            String   @id @default(cuid())
-  name          String
-  priceDelta    Float    @default(0)
-  isDefault     Boolean  @default(false)
-  optionGroupId String
-  optionGroup   OptionGroup @relation(fields: [optionGroupId], references: [id], onDelete: Cascade)
+  id               String            @id @default(cuid())
+  name             String
+  priceDelta       Float             @default(0)
+  isDefault        Boolean           @default(false)
+  optionGroupId    String
+  sortOrder        Int               @default(0)
+  optionGroup      OptionGroup       @relation(fields: [optionGroupId], references: [id], onDelete: Cascade)
   orderItemOptions OrderItemOption[]
-  sortOrder     Int      @default(0)
 }
 
 model Allergen {
-  id           String   @id @default(cuid())
+  id           String             @id @default(cuid())
   name         String
   icon         String?
   restaurantId String
-  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  restaurant   Restaurant         @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   menuItems    MenuItemAllergen[]
 }
 
 model MenuItemAllergen {
   menuItemId String
   allergenId String
-  menuItem   MenuItem @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
   allergen   Allergen @relation(fields: [allergenId], references: [id], onDelete: Cascade)
+  menuItem   MenuItem @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
 
   @@id([menuItemId, allergenId])
 }
 
 model RestaurantTable {
-  id           String   @id @default(cuid())
+  id           String     @id @default(cuid())
   tableCode    String
   label        String
   restaurantId String
-  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  createdAt    DateTime   @default(now())
   orders       Order[]
-  createdAt    DateTime @default(now())
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
 
   @@unique([restaurantId, tableCode])
 }
 
 model Order {
-  id           String   @id @default(cuid())
+  id           String          @id @default(cuid())
   orderNumber  Int
-  status       String   @default("RECEIVED") // RECEIVED, PREPARING, READY, SERVED
+  status       String          @default("RECEIVED")
   total        Float
   notes        String?
   restaurantId String
-  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   tableId      String
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
   table        RestaurantTable @relation(fields: [tableId], references: [id])
+  restaurant   Restaurant      @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   items        OrderItem[]
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
 }
 
 model OrderItem {
-  id         String   @id @default(cuid())
-  quantity   Int      @default(1)
+  id         String            @id @default(cuid())
+  quantity   Int               @default(1)
   unitPrice  Float
   notes      String?
   menuItemId String
-  menuItem   MenuItem @relation(fields: [menuItemId], references: [id])
   orderId    String
-  order      Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  order      Order             @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  menuItem   MenuItem          @relation(fields: [menuItemId], references: [id])
   options    OrderItemOption[]
 }
 
 model OrderItemOption {
-  id           String   @id @default(cuid())
+  id           String     @id @default(cuid())
   optionItemId String
-  optionItem   OptionItem @relation(fields: [optionItemId], references: [id])
   orderItemId  String
-  orderItem    OrderItem @relation(fields: [orderItemId], references: [id], onDelete: Cascade)
+  orderItem    OrderItem  @relation(fields: [orderItemId], references: [id], onDelete: Cascade)
+  optionItem   OptionItem @relation(fields: [optionItemId], references: [id])
 }

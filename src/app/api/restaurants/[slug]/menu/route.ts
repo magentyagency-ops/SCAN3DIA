@@ -51,6 +51,7 @@ export async function GET(
                 phone: restaurant.phone,
                 logo: restaurant.logo,
                 accentColor: restaurant.accentColor,
+                themeMode: restaurant.themeMode,
                 taxRate: restaurant.taxRate,
                 currency: restaurant.currency,
                 openingHours: restaurant.openingHours,

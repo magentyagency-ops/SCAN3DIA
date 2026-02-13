@@ -1,0 +1,1327 @@
+
+> menuflow@0.1.0 dev
+> next dev
+
+▲ Next.js 16.1.6 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://172.30.72.193:3000
+- Environments: .env
+
+✓ Starting...
+✓ Ready in 785ms
+ GET /r/le-jardin/t/T1 200 in 1061ms (compile: 959ms, render: 102ms)
+ GET /sw.js 404 in 125ms (compile: 77ms, render: 48ms)
+Error fetching menu: Error [PrismaClientInitializationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].restaurant.findUnique()` invocation in
+/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/chunks/[root-of-the-server]__ff958821._.js:71:174
+
+  68 async function GET(request, { params }) {
+  69     const { slug } = await params;
+  70     try {
+→ 71         const restaurant = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].restaurant.findUnique(
+Can't reach database server at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`
+
+Please make sure your database server is running at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`.
+    at <unknown> (src/app/api/restaurants/[slug]/menu/route.ts:11:52)
+    at async GET (src/app/api/restaurants/[slug]/menu/route.ts:11:28)
+   9 |
+  10 |     try {
+> 11 |         const restaurant = await prisma.restaurant.findUnique({
+     |                                                    ^
+  12 |             where: { slug },
+  13 |             include: {
+  14 |                 categories: { {
+  clientVersion: '6.19.2',
+  errorCode: undefined,
+  retryable: undefined
+}
+ GET /api/restaurants/le-jardin/menu 500 in 5.7s (compile: 510ms, render: 5.1s)
+ GET /r/le-jardin/t/T1 200 in 39ms (compile: 8ms, render: 31ms)
+ GET /sw.js 404 in 34ms (compile: 5ms, render: 29ms)
+Error fetching menu: Error [PrismaClientInitializationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].restaurant.findUnique()` invocation in
+/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/chunks/[root-of-the-server]__ff958821._.js:71:174
+
+  68 async function GET(request, { params }) {
+  69     const { slug } = await params;
+  70     try {
+→ 71         const restaurant = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].restaurant.findUnique(
+Can't reach database server at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`
+
+Please make sure your database server is running at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`.
+    at <unknown> (src/app/api/restaurants/[slug]/menu/route.ts:11:52)
+    at async GET (src/app/api/restaurants/[slug]/menu/route.ts:11:28)
+   9 |
+  10 |     try {
+> 11 |         const restaurant = await prisma.restaurant.findUnique({
+     |                                                    ^
+  12 |             where: { slug },
+  13 |             include: {
+  14 |                 categories: { {
+  clientVersion: '6.19.2',
+  errorCode: undefined,
+  retryable: undefined
+}
+ GET /api/restaurants/le-jardin/menu 500 in 5.1s (compile: 11ms, render: 5.1s)
+ GET /admin 200 in 158ms (compile: 109ms, render: 49ms)
+ GET /sw.js 404 in 52ms (compile: 5ms, render: 48ms)
+⨯ Error [PrismaClientInitializationError]: 
+Invalid `{imported module ./src/lib/prisma.ts}["prisma"].restaurant.findUnique()` invocation in
+/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/chunks/[root-of-the-server]__522ea822._.js:71:170
+
+  68 async function GET(request) {
+  69     const { searchParams } = new URL(request.url);
+  70     const slug = searchParams.get('restaurantSlug') || 'le-jardin';
+→ 71     const restaurant = await {imported module ./src/lib/prisma.ts}["prisma"].restaurant.findUnique(
+Can't reach database server at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`
+
+Please make sure your database server is running at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`.
+    at <unknown> (src/app/api/admin/analytics/route.ts:8:48)
+    at async GET (src/app/api/admin/analytics/route.ts:8:24)
+   6 |     const slug = searchParams.get('restaurantSlug') || 'le-jardin';
+   7 |
+>  8 |     const restaurant = await prisma.restaurant.findUnique({ where: { slug } });
+     |                                                ^
+   9 |     if (!restaurant) {
+  10 |         return NextResponse.json({ error: 'Restaurant not found' }, { status: 404 });
+  11 |     } {
+  clientVersion: '6.19.2',
+  errorCode: undefined,
+  retryable: undefined
+}
+⨯ Error [PrismaClientInitializationError]: 
+Invalid `{imported module ./src/lib/prisma.ts}["prisma"].restaurant.findUnique()` invocation in
+/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/chunks/[root-of-the-server]__c9ed0725._.js:77:170
+
+  74 async function GET(request) {
+  75     const { searchParams } = new URL(request.url);
+  76     const slug = searchParams.get('restaurantSlug') || 'le-jardin';
+→ 77     const restaurant = await {imported module ./src/lib/prisma.ts}["prisma"].restaurant.findUnique(
+Can't reach database server at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`
+
+Please make sure your database server is running at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`.
+    at <unknown> (src/app/api/admin/menu/route.ts:9:48)
+    at async GET (src/app/api/admin/menu/route.ts:9:24)
+   7 |     const slug = searchParams.get('restaurantSlug') || 'le-jardin';
+   8 |
+>  9 |     const restaurant = await prisma.restaurant.findUnique({
+     |                                                ^
+  10 |         where: { slug },
+  11 |         include: {
+  12 |             categories: { {
+  clientVersion: '6.19.2',
+  errorCode: undefined,
+  retryable: undefined
+}
+⨯ Error [PrismaClientInitializationError]: 
+Invalid `{imported module ./src/lib/prisma.ts}["prisma"].restaurant.findUnique()` invocation in
+/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/chunks/[root-of-the-server]__b4f9f722._.js:75:170
+
+  72 async function GET(request) {
+  73     const { searchParams } = new URL(request.url);
+  74     const slug = searchParams.get('restaurantSlug') || 'le-jardin';
+→ 75     const restaurant = await {imported module ./src/lib/prisma.ts}["prisma"].restaurant.findUnique(
+Can't reach database server at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`
+
+Please make sure your database server is running at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`.
+    at <unknown> (src/app/api/admin/tables/route.ts:8:48)
+    at async GET (src/app/api/admin/tables/route.ts:8:24)
+   6 |     const slug = searchParams.get('restaurantSlug') || 'le-jardin';
+   7 |
+>  8 |     const restaurant = await prisma.restaurant.findUnique({
+     |                                                ^
+   9 |         where: { slug },
+  10 |     });
+  11 |     if (!restaurant) { {
+  clientVersion: '6.19.2',
+  errorCode: undefined,
+  retryable: undefined
+}
+ GET /api/admin/analytics?restaurantSlug=le-jardin 500 in 5.3s (compile: 34ms, render: 5.2s)
+ GET /api/admin/menu?restaurantSlug=le-jardin 500 in 5.3s (compile: 49ms, render: 5.2s)
+ GET /api/admin/tables?restaurantSlug=le-jardin 500 in 5.3s (compile: 67ms, render: 5.2s)
+ GET /r/le-jardin/t/T1/order/cmljhgzeu00170feh11vvgmuj 200 in 414ms (compile: 361ms, render: 53ms)
+ GET /r/le-jardin/t/T1/order/cmljhlk0k001b0feh37aj65nb 200 in 440ms (compile: 386ms, render: 54ms)
+ GET /sw.js 404 in 23ms (compile: 3ms, render: 20ms)
+Error fetching order: Error [PrismaClientInitializationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].order.findUnique()` invocation in
+/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/chunks/[root-of-the-server]__d30b61e5._.js:71:164
+
+  68 async function GET(request, { params }) {
+  69     const { id } = await params;
+  70     try {
+→ 71         const order = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].order.findUnique(
+Can't reach database server at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`
+
+Please make sure your database server is running at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`.
+    at <unknown> (src/app/api/orders/[id]/route.ts:10:42)
+    at async GET (src/app/api/orders/[id]/route.ts:10:23)
+   8 |     const { id } = await params;
+   9 |     try {
+> 10 |         const order = await prisma.order.findUnique({
+     |                                          ^
+  11 |             where: { id },
+  12 |             include: {
+  13 |                 table: true, {
+  clientVersion: '6.19.2',
+  errorCode: undefined,
+  retryable: undefined
+}
+Error fetching order: Error [PrismaClientInitializationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].order.findUnique()` invocation in
+/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/chunks/[root-of-the-server]__d30b61e5._.js:71:164
+
+  68 async function GET(request, { params }) {
+  69     const { id } = await params;
+  70     try {
+→ 71         const order = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].order.findUnique(
+Can't reach database server at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`
+
+Please make sure your database server is running at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`.
+    at <unknown> (src/app/api/orders/[id]/route.ts:10:42)
+    at async GET (src/app/api/orders/[id]/route.ts:10:23)
+   8 |     const { id } = await params;
+   9 |     try {
+> 10 |         const order = await prisma.order.findUnique({
+     |                                          ^
+  11 |             where: { id },
+  12 |             include: {
+  13 |                 table: true, {
+  clientVersion: '6.19.2',
+  errorCode: undefined,
+  retryable: undefined
+}
+Error fetching order: Error [PrismaClientInitializationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].order.findUnique()` invocation in
+/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/chunks/[root-of-the-server]__d30b61e5._.js:71:164
+
+  68 async function GET(request, { params }) {
+  69     const { id } = await params;
+  70     try {
+→ 71         const order = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].order.findUnique(
+Can't reach database server at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`
+
+Please make sure your database server is running at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`.
+    at <unknown> (src/app/api/orders/[id]/route.ts:10:42)
+    at async GET (src/app/api/orders/[id]/route.ts:10:23)
+   8 |     const { id } = await params;
+   9 |     try {
+> 10 |         const order = await prisma.order.findUnique({
+     |                                          ^
+  11 |             where: { id },
+  12 |             include: {
+  13 |                 table: true, {
+  clientVersion: '6.19.2',
+  errorCode: undefined,
+  retryable: undefined
+}
+Error fetching order: Error [PrismaClientInitializationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].order.findUnique()` invocation in
+/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/chunks/[root-of-the-server]__d30b61e5._.js:71:164
+
+  68 async function GET(request, { params }) {
+  69     const { id } = await params;
+  70     try {
+→ 71         const order = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].order.findUnique(
+Can't reach database server at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`
+
+Please make sure your database server is running at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`.
+    at <unknown> (src/app/api/orders/[id]/route.ts:10:42)
+    at async GET (src/app/api/orders/[id]/route.ts:10:23)
+   8 |     const { id } = await params;
+   9 |     try {
+> 10 |         const order = await prisma.order.findUnique({
+     |                                          ^
+  11 |             where: { id },
+  12 |             include: {
+  13 |                 table: true, {
+  clientVersion: '6.19.2',
+  errorCode: undefined,
+  retryable: undefined
+}
+ GET /api/orders/cmljhgzeu00170feh11vvgmuj 500 in 5.9s (compile: 543ms, render: 5.3s)
+ GET /api/orders/cmljhlk0k001b0feh37aj65nb 500 in 5.9s (compile: 545ms, render: 5.3s)
+ GET /api/orders/cmljhgzeu00170feh11vvgmuj 500 in 2.8s (compile: 4ms, render: 2.8s)
+ GET /api/orders/cmljhlk0k001b0feh37aj65nb 500 in 2.8s (compile: 920µs, render: 2.8s)
+Error fetching order: Error [PrismaClientInitializationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].order.findUnique()` invocation in
+/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/chunks/[root-of-the-server]__d30b61e5._.js:71:164
+
+  68 async function GET(request, { params }) {
+  69     const { id } = await params;
+  70     try {
+→ 71         const order = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].order.findUnique(
+Can't reach database server at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`
+
+Please make sure your database server is running at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`.
+    at <unknown> (src/app/api/orders/[id]/route.ts:10:42)
+    at async GET (src/app/api/orders/[id]/route.ts:10:23)
+   8 |     const { id } = await params;
+   9 |     try {
+> 10 |         const order = await prisma.order.findUnique({
+     |                                          ^
+  11 |             where: { id },
+  12 |             include: {
+  13 |                 table: true, {
+  clientVersion: '6.19.2',
+  errorCode: undefined,
+  retryable: undefined
+}
+Error fetching order: Error [PrismaClientInitializationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].order.findUnique()` invocation in
+/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/chunks/[root-of-the-server]__d30b61e5._.js:71:164
+
+  68 async function GET(request, { params }) {
+  69     const { id } = await params;
+  70     try {
+→ 71         const order = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].order.findUnique(
+Can't reach database server at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`
+
+Please make sure your database server is running at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`.
+    at <unknown> (src/app/api/orders/[id]/route.ts:10:42)
+    at async GET (src/app/api/orders/[id]/route.ts:10:23)
+   8 |     const { id } = await params;
+   9 |     try {
+> 10 |         const order = await prisma.order.findUnique({
+     |                                          ^
+  11 |             where: { id },
+  12 |             include: {
+  13 |                 table: true, {
+  clientVersion: '6.19.2',
+  errorCode: undefined,
+  retryable: undefined
+}
+Error fetching order: Error [PrismaClientInitializationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].order.findUnique()` invocation in
+/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/chunks/[root-of-the-server]__d30b61e5._.js:71:164
+
+  68 async function GET(request, { params }) {
+  69     const { id } = await params;
+  70     try {
+→ 71         const order = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].order.findUnique(
+Can't reach database server at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`
+
+Please make sure your database server is running at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`.
+    at <unknown> (src/app/api/orders/[id]/route.ts:10:42)
+    at async GET (src/app/api/orders/[id]/route.ts:10:23)
+   8 |     const { id } = await params;
+   9 |     try {
+> 10 |         const order = await prisma.order.findUnique({
+     |                                          ^
+  11 |             where: { id },
+  12 |             include: {
+  13 |                 table: true, {
+  clientVersion: '6.19.2',
+  errorCode: undefined,
+  retryable: undefined
+}
+ GET /api/orders/cmljhgzeu00170feh11vvgmuj 500 in 5.2s (compile: 3ms, render: 5.2s)
+ GET /api/orders/cmljhlk0k001b0feh37aj65nb 500 in 5.1s (compile: 1281µs, render: 5.1s)
+ GET /api/orders/cmljhlk0k001b0feh37aj65nb 500 in 1922ms (compile: 11ms, render: 1911ms)
+ GET /admin 200 in 128ms (compile: 56ms, render: 72ms)
+ GET /r/le-jardin/t/T1 200 in 27ms (compile: 12ms, render: 15ms)
+⨯ Error [PrismaClientInitializationError]: 
+Invalid `{imported module ./src/lib/prisma.ts}["prisma"].restaurant.findUnique()` invocation in
+/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/chunks/[root-of-the-server]__522ea822._.js:71:170
+
+  68 async function GET(request) {
+  69     const { searchParams } = new URL(request.url);
+  70     const slug = searchParams.get('restaurantSlug') || 'le-jardin';
+→ 71     const restaurant = await {imported module ./src/lib/prisma.ts}["prisma"].restaurant.findUnique(
+Can't reach database server at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`
+
+Please make sure your database server is running at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`.
+    at <unknown> (src/app/api/admin/analytics/route.ts:8:48)
+    at async GET (src/app/api/admin/analytics/route.ts:8:24)
+   6 |     const slug = searchParams.get('restaurantSlug') || 'le-jardin';
+   7 |
+>  8 |     const restaurant = await prisma.restaurant.findUnique({ where: { slug } });
+     |                                                ^
+   9 |     if (!restaurant) {
+  10 |         return NextResponse.json({ error: 'Restaurant not found' }, { status: 404 });
+  11 |     } {
+  clientVersion: '6.19.2',
+  errorCode: undefined,
+  retryable: undefined
+}
+⨯ Error [PrismaClientInitializationError]: 
+Invalid `{imported module ./src/lib/prisma.ts}["prisma"].restaurant.findUnique()` invocation in
+/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/chunks/[root-of-the-server]__c9ed0725._.js:77:170
+
+  74 async function GET(request) {
+  75     const { searchParams } = new URL(request.url);
+  76     const slug = searchParams.get('restaurantSlug') || 'le-jardin';
+→ 77     const restaurant = await {imported module ./src/lib/prisma.ts}["prisma"].restaurant.findUnique(
+Can't reach database server at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`
+
+Please make sure your database server is running at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`.
+    at <unknown> (src/app/api/admin/menu/route.ts:9:48)
+    at async GET (src/app/api/admin/menu/route.ts:9:24)
+   7 |     const slug = searchParams.get('restaurantSlug') || 'le-jardin';
+   8 |
+>  9 |     const restaurant = await prisma.restaurant.findUnique({
+     |                                                ^
+  10 |         where: { slug },
+  11 |         include: {
+  12 |             categories: { {
+  clientVersion: '6.19.2',
+  errorCode: undefined,
+  retryable: undefined
+}
+⨯ Error [PrismaClientInitializationError]: 
+Invalid `{imported module ./src/lib/prisma.ts}["prisma"].restaurant.findUnique()` invocation in
+/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/chunks/[root-of-the-server]__b4f9f722._.js:75:170
+
+  72 async function GET(request) {
+  73     const { searchParams } = new URL(request.url);
+  74     const slug = searchParams.get('restaurantSlug') || 'le-jardin';
+→ 75     const restaurant = await {imported module ./src/lib/prisma.ts}["prisma"].restaurant.findUnique(
+Can't reach database server at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`
+
+Please make sure your database server is running at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`.
+    at <unknown> (src/app/api/admin/tables/route.ts:8:48)
+    at async GET (src/app/api/admin/tables/route.ts:8:24)
+   6 |     const slug = searchParams.get('restaurantSlug') || 'le-jardin';
+   7 |
+>  8 |     const restaurant = await prisma.restaurant.findUnique({
+     |                                                ^
+   9 |         where: { slug },
+  10 |     });
+  11 |     if (!restaurant) { {
+  clientVersion: '6.19.2',
+  errorCode: undefined,
+  retryable: undefined
+}
+ GET /api/admin/analytics?restaurantSlug=le-jardin 500 in 5.3s (compile: 30ms, render: 5.3s)
+ GET /api/admin/menu?restaurantSlug=le-jardin 500 in 5.3s (compile: 53ms, render: 5.3s)
+ GET /api/admin/tables?restaurantSlug=le-jardin 500 in 5.3s (compile: 76ms, render: 5.2s)
+ GET /sw.js 404 in 73ms (compile: 38ms, render: 35ms)
+ GET /r/le-jardin/t/T1 200 in 475ms (compile: 17ms, render: 457ms)
+ GET /sw.js 404 in 26ms (compile: 5ms, render: 21ms)
+Error fetching menu: Error [PrismaClientInitializationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].restaurant.findUnique()` invocation in
+/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/chunks/[root-of-the-server]__ff958821._.js:71:174
+
+  68 async function GET(request, { params }) {
+  69     const { slug } = await params;
+  70     try {
+→ 71         const restaurant = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].restaurant.findUnique(
+Can't reach database server at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`
+
+Please make sure your database server is running at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`.
+    at <unknown> (src/app/api/restaurants/[slug]/menu/route.ts:11:52)
+    at async GET (src/app/api/restaurants/[slug]/menu/route.ts:11:28)
+   9 |
+  10 |     try {
+> 11 |         const restaurant = await prisma.restaurant.findUnique({
+     |                                                    ^
+  12 |             where: { slug },
+  13 |             include: {
+  14 |                 categories: { {
+  clientVersion: '6.19.2',
+  errorCode: undefined,
+  retryable: undefined
+}
+ GET /api/restaurants/le-jardin/menu 500 in 5.2s (compile: 55ms, render: 5.2s)
+  Reload env: .env
+ GET /admin 200 in 139ms (compile: 89ms, render: 49ms)
+ GET /r/le-jardin/t/T1 200 in 32ms (compile: 12ms, render: 20ms)
+ GET /r/le-jardin/t/T1/order/cmljhlk0k001b0feh37aj65nb 200 in 627ms (compile: 232ms, render: 395ms)
+ GET / 307 in 781ms (compile: 477ms, render: 304ms)
+ GET /r/le-jardin/t/T1/order/cmljhlk0k001b0feh37aj65nb 200 in 425ms (compile: 303ms, render: 123ms)
+ GET /r/le-jardin/t/T1 200 in 136ms (compile: 9ms, render: 127ms)
+ GET /sw.js 404 in 73ms (compile: 35ms, render: 38ms)
+Error fetching order: Error [PrismaClientInitializationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].order.findUnique()` invocation in
+/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/chunks/[root-of-the-server]__d30b61e5._.js:71:164
+
+  68 async function GET(request, { params }) {
+  69     const { id } = await params;
+  70     try {
+→ 71         const order = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].order.findUnique(
+Can't reach database server at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`
+
+Please make sure your database server is running at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`.
+    at <unknown> (src/app/api/orders/[id]/route.ts:10:42)
+    at async GET (src/app/api/orders/[id]/route.ts:10:23)
+   8 |     const { id } = await params;
+   9 |     try {
+> 10 |         const order = await prisma.order.findUnique({
+     |                                          ^
+  11 |             where: { id },
+  12 |             include: {
+  13 |                 table: true, {
+  clientVersion: '6.19.2',
+  errorCode: undefined,
+  retryable: undefined
+}
+Error fetching menu: Error [PrismaClientInitializationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].restaurant.findUnique()` invocation in
+/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/chunks/[root-of-the-server]__ff958821._.js:71:174
+
+  68 async function GET(request, { params }) {
+  69     const { slug } = await params;
+  70     try {
+→ 71         const restaurant = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].restaurant.findUnique(
+Can't reach database server at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`
+
+Please make sure your database server is running at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`.
+    at <unknown> (src/app/api/restaurants/[slug]/menu/route.ts:11:52)
+    at async GET (src/app/api/restaurants/[slug]/menu/route.ts:11:28)
+   9 |
+  10 |     try {
+> 11 |         const restaurant = await prisma.restaurant.findUnique({
+     |                                                    ^
+  12 |             where: { slug },
+  13 |             include: {
+  14 |                 categories: { {
+  clientVersion: '6.19.2',
+  errorCode: undefined,
+  retryable: undefined
+}
+Error fetching order: Error [PrismaClientInitializationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].order.findUnique()` invocation in
+/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/chunks/[root-of-the-server]__d30b61e5._.js:71:164
+
+  68 async function GET(request, { params }) {
+  69     const { id } = await params;
+  70     try {
+→ 71         const order = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].order.findUnique(
+Can't reach database server at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`
+
+Please make sure your database server is running at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`.
+    at <unknown> (src/app/api/orders/[id]/route.ts:10:42)
+    at async GET (src/app/api/orders/[id]/route.ts:10:23)
+   8 |     const { id } = await params;
+   9 |     try {
+> 10 |         const order = await prisma.order.findUnique({
+     |                                          ^
+  11 |             where: { id },
+  12 |             include: {
+  13 |                 table: true, {
+  clientVersion: '6.19.2',
+  errorCode: undefined,
+  retryable: undefined
+}
+ GET /api/orders/cmljhlk0k001b0feh37aj65nb 500 in 5.5s (compile: 157ms, render: 5.3s)
+ GET /api/restaurants/le-jardin/menu 500 in 4.5s (compile: 125ms, render: 4.4s)
+ GET /api/orders/cmljhlk0k001b0feh37aj65nb 500 in 2.6s (compile: 4ms, render: 2.6s)
+Error fetching order: Error [PrismaClientInitializationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].order.findUnique()` invocation in
+/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/chunks/[root-of-the-server]__d30b61e5._.js:71:164
+
+  68 async function GET(request, { params }) {
+  69     const { id } = await params;
+  70     try {
+→ 71         const order = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].order.findUnique(
+Can't reach database server at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`
+
+Please make sure your database server is running at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`.
+    at <unknown> (src/app/api/orders/[id]/route.ts:10:42)
+    at async GET (src/app/api/orders/[id]/route.ts:10:23)
+   8 |     const { id } = await params;
+   9 |     try {
+> 10 |         const order = await prisma.order.findUnique({
+     |                                          ^
+  11 |             where: { id },
+  12 |             include: {
+  13 |                 table: true, {
+  clientVersion: '6.19.2',
+  errorCode: undefined,
+  retryable: undefined
+}
+Error fetching order: Error [PrismaClientInitializationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].order.findUnique()` invocation in
+/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/chunks/[root-of-the-server]__d30b61e5._.js:71:164
+
+  68 async function GET(request, { params }) {
+  69     const { id } = await params;
+  70     try {
+→ 71         const order = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].order.findUnique(
+Can't reach database server at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`
+
+Please make sure your database server is running at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`.
+    at <unknown> (src/app/api/orders/[id]/route.ts:10:42)
+    at async GET (src/app/api/orders/[id]/route.ts:10:23)
+   8 |     const { id } = await params;
+   9 |     try {
+> 10 |         const order = await prisma.order.findUnique({
+     |                                          ^
+  11 |             where: { id },
+  12 |             include: {
+  13 |                 table: true, {
+  clientVersion: '6.19.2',
+  errorCode: undefined,
+  retryable: undefined
+}
+ GET /api/orders/cmljhlk0k001b0feh37aj65nb 500 in 5.2s (compile: 3ms, render: 5.2s)
+ GET /api/orders/cmljhlk0k001b0feh37aj65nb 500 in 2.2s (compile: 4ms, render: 2.1s)
+Error fetching order: Error [PrismaClientInitializationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].order.findUnique()` invocation in
+/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/chunks/[root-of-the-server]__d30b61e5._.js:71:164
+
+  68 async function GET(request, { params }) {
+  69     const { id } = await params;
+  70     try {
+→ 71         const order = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].order.findUnique(
+Can't reach database server at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`
+
+Please make sure your database server is running at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`.
+    at <unknown> (src/app/api/orders/[id]/route.ts:10:42)
+    at async GET (src/app/api/orders/[id]/route.ts:10:23)
+   8 |     const { id } = await params;
+   9 |     try {
+> 10 |         const order = await prisma.order.findUnique({
+     |                                          ^
+  11 |             where: { id },
+  12 |             include: {
+  13 |                 table: true, {
+  clientVersion: '6.19.2',
+  errorCode: undefined,
+  retryable: undefined
+}
+Error fetching order: Error [PrismaClientInitializationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].order.findUnique()` invocation in
+/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/chunks/[root-of-the-server]__d30b61e5._.js:71:164
+
+  68 async function GET(request, { params }) {
+  69     const { id } = await params;
+  70     try {
+→ 71         const order = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].order.findUnique(
+Can't reach database server at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`
+
+Please make sure your database server is running at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`.
+    at <unknown> (src/app/api/orders/[id]/route.ts:10:42)
+    at async GET (src/app/api/orders/[id]/route.ts:10:23)
+   8 |     const { id } = await params;
+   9 |     try {
+> 10 |         const order = await prisma.order.findUnique({
+     |                                          ^
+  11 |             where: { id },
+  12 |             include: {
+  13 |                 table: true, {
+  clientVersion: '6.19.2',
+  errorCode: undefined,
+  retryable: undefined
+}
+ GET /api/orders/cmljhlk0k001b0feh37aj65nb 500 in 5.2s (compile: 6ms, render: 5.2s)
+ GET /api/orders/cmljhlk0k001b0feh37aj65nb 500 in 2.2s (compile: 5ms, render: 2.2s)
+ GET /r/scandalle/t/T1 200 in 130ms (compile: 31ms, render: 98ms)
+ GET /sw.js 404 in 131ms (compile: 36ms, render: 95ms)
+Error fetching order: Error [PrismaClientInitializationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].order.findUnique()` invocation in
+/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/chunks/[root-of-the-server]__d30b61e5._.js:71:164
+
+  68 async function GET(request, { params }) {
+  69     const { id } = await params;
+  70     try {
+→ 71         const order = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].order.findUnique(
+Can't reach database server at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`
+
+Please make sure your database server is running at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`.
+    at <unknown> (src/app/api/orders/[id]/route.ts:10:42)
+    at async GET (src/app/api/orders/[id]/route.ts:10:23)
+   8 |     const { id } = await params;
+   9 |     try {
+> 10 |         const order = await prisma.order.findUnique({
+     |                                          ^
+  11 |             where: { id },
+  12 |             include: {
+  13 |                 table: true, {
+  clientVersion: '6.19.2',
+  errorCode: undefined,
+  retryable: undefined
+}
+Error fetching menu: Error [PrismaClientInitializationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].restaurant.findUnique()` invocation in
+/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/chunks/[root-of-the-server]__ff958821._.js:71:174
+
+  68 async function GET(request, { params }) {
+  69     const { slug } = await params;
+  70     try {
+→ 71         const restaurant = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].restaurant.findUnique(
+Can't reach database server at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`
+
+Please make sure your database server is running at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`.
+    at <unknown> (src/app/api/restaurants/[slug]/menu/route.ts:11:52)
+    at async GET (src/app/api/restaurants/[slug]/menu/route.ts:11:28)
+   9 |
+  10 |     try {
+> 11 |         const restaurant = await prisma.restaurant.findUnique({
+     |                                                    ^
+  12 |             where: { slug },
+  13 |             include: {
+  14 |                 categories: { {
+  clientVersion: '6.19.2',
+  errorCode: undefined,
+  retryable: undefined
+}
+Error fetching order: Error [PrismaClientInitializationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].order.findUnique()` invocation in
+/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/chunks/[root-of-the-server]__d30b61e5._.js:71:164
+
+  68 async function GET(request, { params }) {
+  69     const { id } = await params;
+  70     try {
+→ 71         const order = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].order.findUnique(
+Can't reach database server at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`
+
+Please make sure your database server is running at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`.
+    at <unknown> (src/app/api/orders/[id]/route.ts:10:42)
+    at async GET (src/app/api/orders/[id]/route.ts:10:23)
+   8 |     const { id } = await params;
+   9 |     try {
+> 10 |         const order = await prisma.order.findUnique({
+     |                                          ^
+  11 |             where: { id },
+  12 |             include: {
+  13 |                 table: true, {
+  clientVersion: '6.19.2',
+  errorCode: undefined,
+  retryable: undefined
+}
+ GET /api/orders/cmljhlk0k001b0feh37aj65nb 500 in 5.5s (compile: 4ms, render: 5.5s)
+ GET /api/restaurants/scandalle/menu 500 in 3.6s (compile: 5ms, render: 3.6s)
+ GET /api/orders/cmljhlk0k001b0feh37aj65nb 500 in 2.5s (compile: 7ms, render: 2.5s)
+Error fetching order: Error [PrismaClientInitializationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].order.findUnique()` invocation in
+/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/chunks/[root-of-the-server]__d30b61e5._.js:71:164
+
+  68 async function GET(request, { params }) {
+  69     const { id } = await params;
+  70     try {
+→ 71         const order = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].order.findUnique(
+Can't reach database server at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`
+
+Please make sure your database server is running at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`.
+    at <unknown> (src/app/api/orders/[id]/route.ts:10:42)
+    at async GET (src/app/api/orders/[id]/route.ts:10:23)
+   8 |     const { id } = await params;
+   9 |     try {
+> 10 |         const order = await prisma.order.findUnique({
+     |                                          ^
+  11 |             where: { id },
+  12 |             include: {
+  13 |                 table: true, {
+  clientVersion: '6.19.2',
+  errorCode: undefined,
+  retryable: undefined
+}
+Error fetching order: Error [PrismaClientInitializationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].order.findUnique()` invocation in
+/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/chunks/[root-of-the-server]__d30b61e5._.js:71:164
+
+  68 async function GET(request, { params }) {
+  69     const { id } = await params;
+  70     try {
+→ 71         const order = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].order.findUnique(
+Can't reach database server at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`
+
+Please make sure your database server is running at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`.
+    at <unknown> (src/app/api/orders/[id]/route.ts:10:42)
+    at async GET (src/app/api/orders/[id]/route.ts:10:23)
+   8 |     const { id } = await params;
+   9 |     try {
+> 10 |         const order = await prisma.order.findUnique({
+     |                                          ^
+  11 |             where: { id },
+  12 |             include: {
+  13 |                 table: true, {
+  clientVersion: '6.19.2',
+  errorCode: undefined,
+  retryable: undefined
+}
+ GET /api/orders/cmljhlk0k001b0feh37aj65nb 500 in 5.2s (compile: 19ms, render: 5.2s)
+ GET /api/orders/cmljhlk0k001b0feh37aj65nb 500 in 1187ms (compile: 4ms, render: 1183ms)
+ GET /admin?restaurantSlug=scandalle 200 in 86ms (compile: 5ms, render: 81ms)
+Error fetching order: Error [PrismaClientInitializationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].order.findUnique()` invocation in
+/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/chunks/[root-of-the-server]__d30b61e5._.js:71:164
+
+  68 async function GET(request, { params }) {
+  69     const { id } = await params;
+  70     try {
+→ 71         const order = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].order.findUnique(
+Can't reach database server at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`
+
+Please make sure your database server is running at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`.
+    at <unknown> (src/app/api/orders/[id]/route.ts:10:42)
+    at async GET (src/app/api/orders/[id]/route.ts:10:23)
+   8 |     const { id } = await params;
+   9 |     try {
+> 10 |         const order = await prisma.order.findUnique({
+     |                                          ^
+  11 |             where: { id },
+  12 |             include: {
+  13 |                 table: true, {
+  clientVersion: '6.19.2',
+  errorCode: undefined,
+  retryable: undefined
+}
+⨯ Error [PrismaClientInitializationError]: 
+Invalid `{imported module ./src/lib/prisma.ts}["prisma"].restaurant.findUnique()` invocation in
+/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/chunks/[root-of-the-server]__522ea822._.js:71:170
+
+  68 async function GET(request) {
+  69     const { searchParams } = new URL(request.url);
+  70     const slug = searchParams.get('restaurantSlug') || 'le-jardin';
+→ 71     const restaurant = await {imported module ./src/lib/prisma.ts}["prisma"].restaurant.findUnique(
+Can't reach database server at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`
+
+Please make sure your database server is running at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`.
+    at <unknown> (src/app/api/admin/analytics/route.ts:8:48)
+    at async GET (src/app/api/admin/analytics/route.ts:8:24)
+   6 |     const slug = searchParams.get('restaurantSlug') || 'le-jardin';
+   7 |
+>  8 |     const restaurant = await prisma.restaurant.findUnique({ where: { slug } });
+     |                                                ^
+   9 |     if (!restaurant) {
+  10 |         return NextResponse.json({ error: 'Restaurant not found' }, { status: 404 });
+  11 |     } {
+  clientVersion: '6.19.2',
+  errorCode: undefined,
+  retryable: undefined
+}
+⨯ Error [PrismaClientInitializationError]: 
+Invalid `{imported module ./src/lib/prisma.ts}["prisma"].restaurant.findUnique()` invocation in
+/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/chunks/[root-of-the-server]__c9ed0725._.js:77:170
+
+  74 async function GET(request) {
+  75     const { searchParams } = new URL(request.url);
+  76     const slug = searchParams.get('restaurantSlug') || 'le-jardin';
+→ 77     const restaurant = await {imported module ./src/lib/prisma.ts}["prisma"].restaurant.findUnique(
+Can't reach database server at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`
+
+Please make sure your database server is running at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`.
+    at <unknown> (src/app/api/admin/menu/route.ts:9:48)
+    at async GET (src/app/api/admin/menu/route.ts:9:24)
+   7 |     const slug = searchParams.get('restaurantSlug') || 'le-jardin';
+   8 |
+>  9 |     const restaurant = await prisma.restaurant.findUnique({
+     |                                                ^
+  10 |         where: { slug },
+  11 |         include: {
+  12 |             categories: { {
+  clientVersion: '6.19.2',
+  errorCode: undefined,
+  retryable: undefined
+}
+⨯ Error [PrismaClientInitializationError]: 
+Invalid `{imported module ./src/lib/prisma.ts}["prisma"].restaurant.findUnique()` invocation in
+/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/chunks/[root-of-the-server]__b4f9f722._.js:75:170
+
+  72 async function GET(request) {
+  73     const { searchParams } = new URL(request.url);
+  74     const slug = searchParams.get('restaurantSlug') || 'le-jardin';
+→ 75     const restaurant = await {imported module ./src/lib/prisma.ts}["prisma"].restaurant.findUnique(
+Can't reach database server at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`
+
+Please make sure your database server is running at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`.
+    at <unknown> (src/app/api/admin/tables/route.ts:8:48)
+    at async GET (src/app/api/admin/tables/route.ts:8:24)
+   6 |     const slug = searchParams.get('restaurantSlug') || 'le-jardin';
+   7 |
+>  8 |     const restaurant = await prisma.restaurant.findUnique({
+     |                                                ^
+   9 |         where: { slug },
+  10 |     });
+  11 |     if (!restaurant) { {
+  clientVersion: '6.19.2',
+  errorCode: undefined,
+  retryable: undefined
+}
+ GET /api/orders/cmljhlk0k001b0feh37aj65nb 500 in 5.4s (compile: 3ms, render: 5.4s)
+ GET /api/admin/analytics?restaurantSlug=le-jardin 500 in 3.7s (compile: 42ms, render: 3.6s)
+ GET /api/admin/menu?restaurantSlug=le-jardin 500 in 3.7s (compile: 61ms, render: 3.6s)
+ GET /api/admin/tables?restaurantSlug=le-jardin 500 in 3.7s (compile: 81ms, render: 3.6s)
+ GET /sw.js 404 in 22ms (compile: 3ms, render: 19ms)
+ GET /r/scan-dalle/t/T1 200 in 133ms (compile: 10ms, render: 123ms)
+ GET /sw.js 404 in 36ms (compile: 4ms, render: 32ms)
+Error fetching menu: Error [PrismaClientInitializationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].restaurant.findUnique()` invocation in
+/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/chunks/[root-of-the-server]__ff958821._.js:71:174
+
+  68 async function GET(request, { params }) {
+  69     const { slug } = await params;
+  70     try {
+→ 71         const restaurant = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].restaurant.findUnique(
+Can't reach database server at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`
+
+Please make sure your database server is running at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`.
+    at <unknown> (src/app/api/restaurants/[slug]/menu/route.ts:11:52)
+    at async GET (src/app/api/restaurants/[slug]/menu/route.ts:11:28)
+   9 |
+  10 |     try {
+> 11 |         const restaurant = await prisma.restaurant.findUnique({
+     |                                                    ^
+  12 |             where: { slug },
+  13 |             include: {
+  14 |                 categories: { {
+  clientVersion: '6.19.2',
+  errorCode: undefined,
+  retryable: undefined
+}
+ GET /api/restaurants/scan-dalle/menu 500 in 5.2s (compile: 9ms, render: 5.2s)
+  Reload env: .env
+ GET /admin 200 in 393ms (compile: 159ms, render: 234ms)
+ GET /r/le-jardin/t/T1 200 in 240ms (compile: 30ms, render: 210ms)
+ GET /r/scan-dalle/t/T1 200 in 244ms (compile: 56ms, render: 188ms)
+ GET /r/le-jardin/t/T1 200 in 163ms (compile: 3ms, render: 160ms)
+ GET /admin 200 in 200ms (compile: 19ms, render: 180ms)
+⨯ Error [PrismaClientInitializationError]: 
+Invalid `{imported module ./src/lib/prisma.ts}["prisma"].restaurant.findUnique()` invocation in
+/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/chunks/[root-of-the-server]__522ea822._.js:71:170
+
+  68 async function GET(request) {
+  69     const { searchParams } = new URL(request.url);
+  70     const slug = searchParams.get('restaurantSlug') || 'le-jardin';
+→ 71     const restaurant = await {imported module ./src/lib/prisma.ts}["prisma"].restaurant.findUnique(
+Can't reach database server at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`
+
+Please make sure your database server is running at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`.
+    at <unknown> (src/app/api/admin/analytics/route.ts:8:48)
+    at async GET (src/app/api/admin/analytics/route.ts:8:24)
+   6 |     const slug = searchParams.get('restaurantSlug') || 'le-jardin';
+   7 |
+>  8 |     const restaurant = await prisma.restaurant.findUnique({ where: { slug } });
+     |                                                ^
+   9 |     if (!restaurant) {
+  10 |         return NextResponse.json({ error: 'Restaurant not found' }, { status: 404 });
+  11 |     } {
+  clientVersion: '6.19.2',
+  errorCode: undefined,
+  retryable: undefined
+}
+⨯ Error [PrismaClientInitializationError]: 
+Invalid `{imported module ./src/lib/prisma.ts}["prisma"].restaurant.findUnique()` invocation in
+/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/chunks/[root-of-the-server]__c9ed0725._.js:77:170
+
+  74 async function GET(request) {
+  75     const { searchParams } = new URL(request.url);
+  76     const slug = searchParams.get('restaurantSlug') || 'le-jardin';
+→ 77     const restaurant = await {imported module ./src/lib/prisma.ts}["prisma"].restaurant.findUnique(
+Can't reach database server at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`
+
+Please make sure your database server is running at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`.
+    at <unknown> (src/app/api/admin/menu/route.ts:9:48)
+    at async GET (src/app/api/admin/menu/route.ts:9:24)
+   7 |     const slug = searchParams.get('restaurantSlug') || 'le-jardin';
+   8 |
+>  9 |     const restaurant = await prisma.restaurant.findUnique({
+     |                                                ^
+  10 |         where: { slug },
+  11 |         include: {
+  12 |             categories: { {
+  clientVersion: '6.19.2',
+  errorCode: undefined,
+  retryable: undefined
+}
+⨯ Error [PrismaClientInitializationError]: 
+Invalid `{imported module ./src/lib/prisma.ts}["prisma"].restaurant.findUnique()` invocation in
+/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/chunks/[root-of-the-server]__b4f9f722._.js:75:170
+
+  72 async function GET(request) {
+  73     const { searchParams } = new URL(request.url);
+  74     const slug = searchParams.get('restaurantSlug') || 'le-jardin';
+→ 75     const restaurant = await {imported module ./src/lib/prisma.ts}["prisma"].restaurant.findUnique(
+Can't reach database server at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`
+
+Please make sure your database server is running at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`.
+    at <unknown> (src/app/api/admin/tables/route.ts:8:48)
+    at async GET (src/app/api/admin/tables/route.ts:8:24)
+   6 |     const slug = searchParams.get('restaurantSlug') || 'le-jardin';
+   7 |
+>  8 |     const restaurant = await prisma.restaurant.findUnique({
+     |                                                ^
+   9 |         where: { slug },
+  10 |     });
+  11 |     if (!restaurant) { {
+  clientVersion: '6.19.2',
+  errorCode: undefined,
+  retryable: undefined
+}
+ GET /api/admin/analytics?restaurantSlug=le-jardin 500 in 5.4s (compile: 30ms, render: 5.3s)
+ GET /api/admin/menu?restaurantSlug=le-jardin 500 in 5.4s (compile: 51ms, render: 5.3s)
+ GET /api/admin/tables?restaurantSlug=le-jardin 500 in 5.4s (compile: 74ms, render: 5.3s)
+ GET /sw.js 404 in 113ms (compile: 47ms, render: 66ms)
+ GET /r/scandalle/t/T1 200 in 242ms (compile: 126ms, render: 116ms)
+ GET /sw.js 404 in 29ms (compile: 6ms, render: 22ms)
+ GET /r/le-jardin/t/T1/order/cmljhlk0k001b0feh37aj65nb 200 in 112ms (compile: 63ms, render: 49ms)
+Error fetching menu: Error [PrismaClientInitializationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].restaurant.findUnique()` invocation in
+/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/chunks/[root-of-the-server]__ff958821._.js:71:174
+
+  68 async function GET(request, { params }) {
+  69     const { slug } = await params;
+  70     try {
+→ 71         const restaurant = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].restaurant.findUnique(
+Can't reach database server at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`
+
+Please make sure your database server is running at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`.
+    at <unknown> (src/app/api/restaurants/[slug]/menu/route.ts:11:52)
+    at async GET (src/app/api/restaurants/[slug]/menu/route.ts:11:28)
+   9 |
+  10 |     try {
+> 11 |         const restaurant = await prisma.restaurant.findUnique({
+     |                                                    ^
+  12 |             where: { slug },
+  13 |             include: {
+  14 |                 categories: { {
+  clientVersion: '6.19.2',
+  errorCode: undefined,
+  retryable: undefined
+}
+Error fetching order: Error [PrismaClientInitializationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].order.findUnique()` invocation in
+/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/chunks/[root-of-the-server]__d30b61e5._.js:71:164
+
+  68 async function GET(request, { params }) {
+  69     const { id } = await params;
+  70     try {
+→ 71         const order = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].order.findUnique(
+Can't reach database server at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`
+
+Please make sure your database server is running at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`.
+    at <unknown> (src/app/api/orders/[id]/route.ts:10:42)
+    at async GET (src/app/api/orders/[id]/route.ts:10:23)
+   8 |     const { id } = await params;
+   9 |     try {
+> 10 |         const order = await prisma.order.findUnique({
+     |                                          ^
+  11 |             where: { id },
+  12 |             include: {
+  13 |                 table: true, {
+  clientVersion: '6.19.2',
+  errorCode: undefined,
+  retryable: undefined
+}
+ GET /api/restaurants/scandalle/menu 500 in 5.3s (compile: 48ms, render: 5.2s)
+ GET /api/orders/cmljhlk0k001b0feh37aj65nb 500 in 2.2s (compile: 38ms, render: 2.2s)
+ GET /admin 200 in 110ms (compile: 6ms, render: 104ms)
+ GET /admin 200 in 49ms (compile: 9ms, render: 41ms)
+ GET /admin 200 in 48ms (compile: 25ms, render: 23ms)
+Error fetching order: Error [PrismaClientInitializationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].order.findUnique()` invocation in
+/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/chunks/[root-of-the-server]__d30b61e5._.js:71:164
+
+  68 async function GET(request, { params }) {
+  69     const { id } = await params;
+  70     try {
+→ 71         const order = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].order.findUnique(
+Can't reach database server at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`
+
+Please make sure your database server is running at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`.
+    at <unknown> (src/app/api/orders/[id]/route.ts:10:42)
+    at async GET (src/app/api/orders/[id]/route.ts:10:23)
+   8 |     const { id } = await params;
+   9 |     try {
+> 10 |         const order = await prisma.order.findUnique({
+     |                                          ^
+  11 |             where: { id },
+  12 |             include: {
+  13 |                 table: true, {
+  clientVersion: '6.19.2',
+  errorCode: undefined,
+  retryable: undefined
+}
+Error fetching order: Error [PrismaClientInitializationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].order.findUnique()` invocation in
+/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/chunks/[root-of-the-server]__d30b61e5._.js:71:164
+
+  68 async function GET(request, { params }) {
+  69     const { id } = await params;
+  70     try {
+→ 71         const order = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].order.findUnique(
+Can't reach database server at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`
+
+Please make sure your database server is running at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`.
+    at <unknown> (src/app/api/orders/[id]/route.ts:10:42)
+    at async GET (src/app/api/orders/[id]/route.ts:10:23)
+   8 |     const { id } = await params;
+   9 |     try {
+> 10 |         const order = await prisma.order.findUnique({
+     |                                          ^
+  11 |             where: { id },
+  12 |             include: {
+  13 |                 table: true, {
+  clientVersion: '6.19.2',
+  errorCode: undefined,
+  retryable: undefined
+}
+ GET /api/orders/cmljhlk0k001b0feh37aj65nb 500 in 5.6s (compile: 10ms, render: 5.6s)
+ GET /api/orders/cmljhlk0k001b0feh37aj65nb 500 in 2.5s (compile: 26ms, render: 2.5s)
+ GET /r/le-jardin/t/T1/order/cmljhgzeu00170feh11vvgmuj 200 in 115ms (compile: 13ms, render: 102ms)
+ GET /r/le-jardin/t/T1/order/cmljhgzeu00170feh11vvgmuj 200 in 95ms (compile: 7ms, render: 88ms)
+ GET /r/le-jardin/t/T1/order/cmljhgzeu00170feh11vvgmuj 200 in 23ms (compile: 4ms, render: 19ms)
+ GET /r/le-jardin/t/T1 200 in 21ms (compile: 4ms, render: 17ms)
+Error fetching order: Error [PrismaClientInitializationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].order.findUnique()` invocation in
+/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/chunks/[root-of-the-server]__d30b61e5._.js:71:164
+
+  68 async function GET(request, { params }) {
+  69     const { id } = await params;
+  70     try {
+→ 71         const order = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].order.findUnique(
+Can't reach database server at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`
+
+Please make sure your database server is running at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`.
+    at <unknown> (src/app/api/orders/[id]/route.ts:10:42)
+    at async GET (src/app/api/orders/[id]/route.ts:10:23)
+   8 |     const { id } = await params;
+   9 |     try {
+> 10 |         const order = await prisma.order.findUnique({
+     |                                          ^
+  11 |             where: { id },
+  12 |             include: {
+  13 |                 table: true, {
+  clientVersion: '6.19.2',
+  errorCode: undefined,
+  retryable: undefined
+}
+Error fetching order: Error [PrismaClientInitializationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].order.findUnique()` invocation in
+/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/chunks/[root-of-the-server]__d30b61e5._.js:71:164
+
+  68 async function GET(request, { params }) {
+  69     const { id } = await params;
+  70     try {
+→ 71         const order = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].order.findUnique(
+Can't reach database server at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`
+
+Please make sure your database server is running at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`.
+    at <unknown> (src/app/api/orders/[id]/route.ts:10:42)
+    at async GET (src/app/api/orders/[id]/route.ts:10:23)
+   8 |     const { id } = await params;
+   9 |     try {
+> 10 |         const order = await prisma.order.findUnique({
+     |                                          ^
+  11 |             where: { id },
+  12 |             include: {
+  13 |                 table: true, {
+  clientVersion: '6.19.2',
+  errorCode: undefined,
+  retryable: undefined
+}
+Error fetching order: Error [PrismaClientInitializationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].order.findUnique()` invocation in
+/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/chunks/[root-of-the-server]__d30b61e5._.js:71:164
+
+  68 async function GET(request, { params }) {
+  69     const { id } = await params;
+  70     try {
+→ 71         const order = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].order.findUnique(
+Can't reach database server at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`
+
+Please make sure your database server is running at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`.
+    at <unknown> (src/app/api/orders/[id]/route.ts:10:42)
+    at async GET (src/app/api/orders/[id]/route.ts:10:23)
+   8 |     const { id } = await params;
+   9 |     try {
+> 10 |         const order = await prisma.order.findUnique({
+     |                                          ^
+  11 |             where: { id },
+  12 |             include: {
+  13 |                 table: true, {
+  clientVersion: '6.19.2',
+  errorCode: undefined,
+  retryable: undefined
+}
+ GET /api/orders/cmljhlk0k001b0feh37aj65nb 500 in 5.4s (compile: 42ms, render: 5.4s)
+ GET /api/orders/cmljhgzeu00170feh11vvgmuj 500 in 4.5s (compile: 8ms, render: 4.5s)
+ GET /api/orders/cmljhlk0k001b0feh37aj65nb 500 in 809ms (compile: 7ms, render: 803ms)
+ GET /r/le-jardin/t/T1 200 in 25ms (compile: 5ms, render: 19ms)
+ GET / 307 in 87ms (compile: 34ms, render: 53ms)
+ GET /r/le-jardin/t/T1 200 in 56ms (compile: 4ms, render: 52ms)
+ GET /sw.js 404 in 27ms (compile: 4ms, render: 23ms)
+Error fetching menu: Error [PrismaClientInitializationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].restaurant.findUnique()` invocation in
+/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/chunks/[root-of-the-server]__ff958821._.js:71:174
+
+  68 async function GET(request, { params }) {
+  69     const { slug } = await params;
+  70     try {
+→ 71         const restaurant = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].restaurant.findUnique(
+Can't reach database server at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`
+
+Please make sure your database server is running at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`.
+    at <unknown> (src/app/api/restaurants/[slug]/menu/route.ts:11:52)
+    at async GET (src/app/api/restaurants/[slug]/menu/route.ts:11:28)
+   9 |
+  10 |     try {
+> 11 |         const restaurant = await prisma.restaurant.findUnique({
+     |                                                    ^
+  12 |             where: { slug },
+  13 |             include: {
+  14 |                 categories: { {
+  clientVersion: '6.19.2',
+  errorCode: undefined,
+  retryable: undefined
+}
+Error fetching orders: Error [PrismaClientInitializationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].restaurant.findUnique()` invocation in
+/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/chunks/[root-of-the-server]__4f93023d._.js:197:174
+
+  194     });
+  195 }
+  196 try {
+→ 197     const restaurant = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].restaurant.findUnique(
+Can't reach database server at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`
+
+Please make sure your database server is running at `dpg-d65kh35um26s73b7be6g-a.frankfurt-postgres.render.com:5432`.
+    at <unknown> (src/app/api/orders/route.ts:112:52)
+    at async GET (src/app/api/orders/route.ts:112:28)
+  110 |
+  111 |     try {
+> 112 |         const restaurant = await prisma.restaurant.findUnique({
+      |                                                    ^
+  113 |             where: { slug: restaurantSlug },
+  114 |         });
+  115 |         if (!restaurant) { {
+  clientVersion: '6.19.2',
+  errorCode: undefined,
+  retryable: undefined
+}
+ GET /api/restaurants/le-jardin/menu 500 in 5.2s (compile: 10ms, render: 5.2s)
+ GET /api/orders?restaurantSlug=le-jardin 500 in 2.9s (compile: 181ms, render: 2.7s)
+Persisting failed: Unable to write SST file 00001230.sst
+
+Caused by:
+    No such file or directory (os error 2)
+⨯ Error: ENOENT: no such file or directory, open '/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/app/r/[slug]/t/[tableCode]/page/build-manifest.json'
+    at ignore-listed frames {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/app/r/[slug]/t/[tableCode]/page/build-manifest.json'
+}
+
+thread 'tokio-runtime-worker' (2352052) panicked at /Users/geist/dev/actions-runner/_work/next.js/next.js/turbopack/crates/turbo-tasks-backend/src/backend/mod.rs:963:22:
+Failed to lookup task type: Looking up task type for TaskId 120913 from database failed
+
+Caused by:
+    0: Unable to open static sorted file referenced from 00001229.meta
+    1: Unable to open static sorted file 00001224.sst
+    2: No such file or directory (os error 2)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'tokio-runtime-worker' (2341664) panicked at /Users/geist/dev/actions-runner/_work/next.js/next.js/turbopack/crates/turbo-tasks-backend/src/backend/mod.rs:963:22:
+Failed to lookup task type: Looking up task type for TaskId 122136 from database failed
+
+Caused by:
+    0: Unable to open static sorted file referenced from 00001096.meta
+    1: Unable to open static sorted file 00001092.sst
+    2: No such file or directory (os error 2)
+
+thread 'tokio-runtime-worker' (2335915) panicked at /Users/geist/dev/actions-runner/_work/next.js/next.js/turbopack/crates/turbo-tasks-backend/src/backend/operation/mod.rs:156:17:
+Failed to restore task data (corrupted database or bug): Meta for <DiskFileSystem as FileSystem>::raw_read_dir (TaskId 116949))
+
+Caused by:
+    0: Looking up data for TaskId 116949 from database failed
+    1: Unable to open static sorted file referenced from 00001227.meta
+    2: Unable to open static sorted file 00001221.sst
+    3: No such file or directory (os error 2)
+
+-----
+[1m[31mFATAL[39m[0m: An unexpected Turbopack error occurred. A panic log has been written to /var/folders/ns/3_j_t39n1hv08ztn4gty56tm0000gn/T/next-panic-59fc0f603a1dbd7fd0d9b0b745a6440.log.
+
+To help make Turbopack better, report this error by ]8;;https://github.com/vercel/next.js/discussions/new?category=turbopack-error-report&title=Turbopack%20Error%3A%20Failed%20to%20restore%20task%20data%20%28corrupted%20database%20or%20bug%29%3A%20Meta%20for%20%3CDiskFileSystem%20as%20FileSystem%3E%3A%3Araw_read_dir%20%28TaskId%20116949%29%29&body=Turbopack%20version%3A%20%6023c464985%60%0ANext.js%20version%3A%20%600.0.0%60%0A%0AError%20message%3A%0A%60%60%60%0AFailed%20to%20restore%20task%20data%20%28corrupted%20database%20or%20bug%29%3A%20Meta%20for%20%3CDiskFileSystem%20as%20FileSystem%3E%3A%3Araw_read_dir%20%28TaskId%20116949%29%29%0A%0ADebug%20info%3A%0A-%20Failed%20to%20restore%20task%20data%20%28corrupted%20database%20or%20bug%29%3A%20Meta%20for%20%3CDiskFileSystem%20as%20FileSystem%3E%3A%3Araw_read_dir%20%28TaskId%20116949%29%29%0A%20%20%0A%20%20Caused%20by%3A%0A%20%20%20%20%20%200%3A%20Looking%20up%20data%20for%20TaskId%20116949%20from%20database%20failed%0A%20%20%20%20%20%201%3A%20Unable%20to%20open%20static%20sorted%20file%20referenced%20from%2000001227.meta%0A%20%20%20%20%20%202%3A%20Unable%20to%20open%20static%20sorted%20file%2000001221.sst%0A%20%20%20%20%20%203%3A%20No%20such%20file%20or%20directory%20%28os%20error%202%29%0A%60%60%60&labels=Turbopack,Turbopack%20Panic%20Backtrace\clicking here.]8;;\
+-----
+
+⨯ Error [TurbopackInternalError]: Failed to restore task data (corrupted database or bug): Meta for <DiskFileSystem as FileSystem>::raw_read_dir (TaskId 116949))
+
+Debug info:
+- Failed to restore task data (corrupted database or bug): Meta for <DiskFileSystem as FileSystem>::raw_read_dir (TaskId 116949))
+  
+  Caused by:
+      0: Looking up data for TaskId 116949 from database failed
+      1: Unable to open static sorted file referenced from 00001227.meta
+      2: Unable to open static sorted file 00001221.sst
+      3: No such file or directory (os error 2)
+    at <unknown> (TurbopackInternalError: Failed to restore task data (corrupted database or bug): Meta for <DiskFileSystem as FileSystem>::raw_read_dir (TaskId 116949))) {
+  location: '/Users/geist/dev/actions-runner/_work/next.js/next.js/turbopack/crates/turbo-tasks-backend/src/backend/operation/mod.rs:156:17'
+}
+Persisting failed: Another write batch or compaction is already active (Only a single write operations is allowed at a time)
+⨯ Error: ENOENT: no such file or directory, open '/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/app/r/[slug]/t/[tableCode]/page/build-manifest.json'
+    at ignore-listed frames {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/app/r/[slug]/t/[tableCode]/page/build-manifest.json'
+}
+⨯ Error: ENOENT: no such file or directory, open '/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/app/api/orders/[id]/[__metadata_id__]/route/app-paths-manifest.json'
+    at ignore-listed frames {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/app/api/orders/[id]/[__metadata_id__]/route/app-paths-manifest.json'
+}
+⨯ Error: ENOENT: no such file or directory, open '/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/app/api/orders/[id]/[__metadata_id__]/route/app-paths-manifest.json'
+    at ignore-listed frames {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/app/api/orders/[id]/[__metadata_id__]/route/app-paths-manifest.json'
+}
+⨯ Error: ENOENT: no such file or directory, open '/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/app/api/orders/[id]/[__metadata_id__]/route/app-paths-manifest.json'
+    at ignore-listed frames {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/app/api/orders/[id]/[__metadata_id__]/route/app-paths-manifest.json'
+}
+⨯ Error: ENOENT: no such file or directory, open '/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/app/api/orders/[id]/[__metadata_id__]/route/app-paths-manifest.json'
+    at ignore-listed frames {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/app/api/orders/[id]/[__metadata_id__]/route/app-paths-manifest.json'
+}
+⨯ Error: ENOENT: no such file or directory, open '/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/app/_not-found/page/build-manifest.json'
+    at ignore-listed frames {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/app/_not-found/page/build-manifest.json'
+}
+⨯ Error: ENOENT: no such file or directory, open '/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/app/r/[slug]/t/[tableCode]/page/build-manifest.json'
+    at ignore-listed frames {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/app/r/[slug]/t/[tableCode]/page/build-manifest.json'
+}
+⨯ Error: ENOENT: no such file or directory, open '/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/app/_not-found/page/build-manifest.json'
+    at ignore-listed frames {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/app/_not-found/page/build-manifest.json'
+}
+⨯ Error: ENOENT: no such file or directory, open '/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/app/r/[slug]/t/[tableCode]/page/build-manifest.json'
+    at ignore-listed frames {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/app/r/[slug]/t/[tableCode]/page/build-manifest.json'
+}
+⨯ Error: ENOENT: no such file or directory, open '/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/app/_not-found/page/build-manifest.json'
+    at ignore-listed frames {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/app/_not-found/page/build-manifest.json'
+}
+⨯ Error: ENOENT: no such file or directory, open '/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/app/r/[slug]/t/[tableCode]/page/build-manifest.json'
+    at ignore-listed frames {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/app/r/[slug]/t/[tableCode]/page/build-manifest.json'
+}
+⨯ Error: ENOENT: no such file or directory, open '/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/app/r/[slug]/t/[tableCode]/page/build-manifest.json'
+    at ignore-listed frames {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/clarencegomis/SCAN3D/menuflow/.next/dev/server/app/r/[slug]/t/[tableCode]/page/build-manifest.json'
+}
