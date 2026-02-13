@@ -259,7 +259,7 @@ function ModelViewerFallback({ modelUrl, iosModelUrl, itemName, onClose, forcedM
         const arBtn = document.createElement('button');
         arBtn.slot = 'ar-button';
         arBtn.style.cssText = 'position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);padding:1rem 2rem;border-radius:1rem;background:linear-gradient(90deg,#22c55e,#059669);color:white;font-weight:bold;font-size:1rem;border:none;box-shadow:0 25px 50px -12px rgba(16,185,129,0.3);display:flex;align-items:center;gap:0.5rem;cursor:pointer;';
-        arBtn.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg> Voir sur ma table`;
+        arBtn.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg> Voir dans mon assiette`;
         mv.appendChild(arBtn);
 
         container.appendChild(mv);
